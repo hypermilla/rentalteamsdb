@@ -1,3 +1,17 @@
+## DEV
+config/dev.js
+_images/
+data/teams_save.json
+
+
+# exclude everything
+uploads/*
+temp/*
+
+# exception to the rule
+!uploads/.gitkeep 
+!temp/.gitkeep 
+
 # Logs
 logs
 *.log
