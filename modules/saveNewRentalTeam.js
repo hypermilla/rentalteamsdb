@@ -6,10 +6,10 @@ const path = require('path');
 
 const keys = require("../config/keys");
 
+
 const client = new vision.ImageAnnotatorClient({
     credentials: keys.googlevisionkey
 });
-
 
 let message = "Uploading image..."; 
 
@@ -140,8 +140,8 @@ async function adjustContrast (imagePath, outputFolder)
         const image = await jimp.read (imagePath);
         await image.contrast(0.4);
         const testImage = await image.writeAsync(outputPath);
-        console.log("Saved image with high contrast: " + testImage);
-        message = "Saved image with high contrast: " + testImage;
+        console.log("Saved image with high contrast");
+        message = "Saved image with high contrast";
         return await outputPath;
     }
 
@@ -160,11 +160,11 @@ async function extractImages(rentalTeamScreenshot, teamFolder)
 {
     const sharp = require('sharp');
 
-    const adjustedImage = await adjustContrast(rentalTeamScreenshot, teamFolder); 
-    const teamImage = sharp(adjustedImage);
-
     try 
     { 
+        const adjustedImage = await adjustContrast(rentalTeamScreenshot, teamFolder); 
+        const teamImage = sharp(adjustedImage);
+
         await teamImage.extract({ left: 350, top: 585, width: 190, height: 40 })
         .toFile(teamFolder + "/ign.jpg", function (err){ 
             console.log("Saved IGN Image!");
@@ -544,6 +544,7 @@ async function getVisionData (id, teamFolder)
 
 async function saveNewRentalTeam (rentalTeamScreenshot)
 {
+
     const teamId = await createNewTeamID();
 
     const teamFolder = await createTeamFolder(teamId); 
@@ -553,7 +554,6 @@ async function saveNewRentalTeam (rentalTeamScreenshot)
     const status = await saveRentalTeamInfo(rentalTeamData);
 
     await deleteTeamFolder(status, teamFolder);
-
 }
 
 
