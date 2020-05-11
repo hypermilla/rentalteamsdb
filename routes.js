@@ -16,18 +16,13 @@ router.get("/", (req, res) => {
 
 router.post("/upload", (req, res) => {
     console.log("Uploading image..."); 
-
     res.render("upload", {
         message: newTeamManager.message
     });
-
     console.log("Rendered uploads page");
-
     upload(req, res, err => { 
-        console.log(req.file.path);
         addTeamToWorkerQueue(req.file.path);
     });
-
 });
 
 router.get('/newrentalteam', (req, res) => {
@@ -44,10 +39,10 @@ async function addTeamToWorkerQueue (filePath) {
     console.log("Added job to Queue! Creating team from image: " + filePath);
 }
 
-createTeamQueue.process( async job => {
-    console.log(job.data.file);
-    await newTeamManager.saveNewRentalTeam(job.data.file);
-    console.log("Job finished");
+createTeamQueue.on ('global:completed', (job, result) => {
+    console.log("Job completed!");
+    newTeamManager.saveTeamToMongoDB(result);
 });
+
 
 module.exports = router; 

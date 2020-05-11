@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const util = require('util');
 const path = require('path');
+require("../models/Team"); 
 
 const keys = require("../config/keys");
 
@@ -542,7 +543,7 @@ async function getVisionData (id, teamFolder)
 }
 
 
-async function saveNewRentalTeam (rentalTeamScreenshot)
+async function createRentalTeam (rentalTeamScreenshot)
 {
 
     const teamId = await createNewTeamID();
@@ -551,11 +552,13 @@ async function saveNewRentalTeam (rentalTeamScreenshot)
     await extractImages(rentalTeamScreenshot, teamFolder); 
 
     const rentalTeamData = await getVisionData(teamId, teamFolder);
-    const status = await saveRentalTeamInfo(rentalTeamData);
+    // const status = await saveRentalTeamInfo(rentalTeamData);
+    await deleteTeamFolder("Success", teamFolder);
 
-    await deleteTeamFolder(status, teamFolder);
+    return rentalTeamData;
 }
 
 
-module.exports.saveNewRentalTeam = saveNewRentalTeam;
+module.exports.createRentalTeam = createRentalTeam;
+module.exports.saveTeamToMongoDB = saveRentalTeamInfo;
 module.exports.message = message; 
