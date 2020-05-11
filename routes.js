@@ -14,18 +14,32 @@ router.get("/", (req, res) => {
     res.render("index");
 });
 
-router.post("/upload", (req, res) => {
-    console.log("Uploading image..."); 
-    res.render("upload", {
-        message: newTeamManager.message
-    });
-    console.log("Rendered uploads page");
-    
-    upload(req, res, err => { 
-        console.log("Uploaded image to: " + req.file.path);
-        console.log(err);
-        addTeamToWorkerQueue(req.file.path);
-    });
+router.post("/upload", async (req, res) => {
+
+    try 
+    { 
+        console.log("Uploading image..."); 
+        res.render("upload", {
+            message: newTeamManager.message
+        });
+        console.log("Rendered uploads page");
+        
+        await upload(req, res, err => { 
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            }
+            console.log("Uploaded image to: " + req.file.path);
+            addTeamToWorkerQueue(req.file.path);
+
+        });
+    }
+
+    catch (error) 
+    {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
 router.get('/newrentalteam', (req, res) => {
