@@ -13,7 +13,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(routes);
 
-const PORT = 5000 || process.env.PORT; 
+const PORT = keys.port; 
 app.listen(PORT, () => {
     console.log("Server is running on port" + PORT);
 });
