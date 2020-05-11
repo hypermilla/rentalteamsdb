@@ -23,6 +23,7 @@ router.post("/upload", (req, res) => {
     
     upload(req, res, err => { 
         console.log("Uploaded image to: " + req.file.path);
+        console.log(err);
         addTeamToWorkerQueue(req.file.path);
     });
 });
