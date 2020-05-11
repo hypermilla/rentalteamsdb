@@ -20,7 +20,9 @@ router.post("/upload", (req, res) => {
         message: newTeamManager.message
     });
     console.log("Rendered uploads page");
+    
     upload(req, res, err => { 
+        console.log("Uploaded image to: " + req.file.path);
         addTeamToWorkerQueue(req.file.path);
     });
 });
