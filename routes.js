@@ -10,9 +10,11 @@ router.get("/", (req, res) => {
 });
 
 router.post("/upload", (req, res) => {
+    console.log("Uploading image..."); 
     res.render("upload", {
         message: newTeamManager.message
     });
+    console.log("Rendered uploads page");
     upload(req, res, err => {
         newTeamManager.saveNewRentalTeam(req.file.path);
         //res.send({message: newTeamManager.message});
