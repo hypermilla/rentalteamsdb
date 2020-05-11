@@ -1,5 +1,5 @@
 const throng = require('throng');
-const Queue = require('Bull'); 
+const Queue = require('bull'); 
 
 const keys = require('./config/keys');
 
