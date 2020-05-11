@@ -28,7 +28,8 @@
     "concurrently": "^4.0.1"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "test": "nodemon app.js",
+    "start": "app.js"
   },
   "repository": {
     "type": "git",
