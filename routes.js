@@ -26,6 +26,7 @@ router.post("/upload", async (req, res) => {
         
         await upload(req, res, err => { 
             if (err) {
+                console.log("Error uploading file!");
                 console.log(err);
                 res.sendStatus(500);
             }

@@ -12,7 +12,7 @@
             We will read the file and add your team to the database!
         </p>
         <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="rentalTeamScreenshot" />
+            <input type="file" enctype="multipart/form-data" name="rentalTeamScreenshot" />
             <button type="submit">Upload</button>
         </form>
     </body>
