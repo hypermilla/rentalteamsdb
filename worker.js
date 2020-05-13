@@ -11,18 +11,25 @@ let workers = process.env.WEB_CONCURRENCY || 1;
 let maxJobsPerWorker = 5;
 
 
-function start() 
+async function start() 
 {
-    console.log("Worker started!");
+    try {
+        console.log("Worker started!");
 
-    let workQueue = new Queue('createRentalTeam', REDIS_URL);
+        let workQueue = new Queue('createRentalTeam', REDIS_URL);
+    
+        workQueue.process(maxJobsPerWorker, async (job) => {
+            console.log(job.data.file);
+            const data = await teamManager.createRentalTeam(job.data.file);
+            console.log("Job finished");
+            return data; 
+        });
+    }
 
-    workQueue.process(maxJobsPerWorker, async (job) => {
-        console.log(job.data.file);
-        const data = await teamManager.createRentalTeam(job.data.file);
-        console.log("Job finished");
-        return data; 
-    });
+    catch (err) {
+        console.log(err);
+    }
+
 }
 
 throng({ workers, start });

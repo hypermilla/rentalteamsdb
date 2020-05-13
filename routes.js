@@ -14,33 +14,17 @@ router.get("/", (req, res) => {
     res.render("index");
 });
 
-router.post("/upload", async (req, res) => {
+router.post("/upload", upload.uploadToS3.array('rentalTeamScreenshot', 1), (req, res, next) => {
+    console.log("Uploading image..."); 
 
-    try 
-    { 
-        console.log("Uploading image..."); 
-        res.render("upload", {
-            message: newTeamManager.message
-        });
-        console.log("Rendered uploads page");
-        
-        await upload(req, res, err => { 
-            if (err) {
-                console.log("Error uploading file!");
-                console.log(err);
-                res.sendStatus(500);
-            }
-            console.log("Uploaded image to: " + req.file.path);
-            addTeamToWorkerQueue(req.file.path);
+    res.render("upload", {
+        message: newTeamManager.message
+    });
 
-        });
-    }
+    console.log("Uploaded image to:");
+    console.log(req.files[0].location);
 
-    catch (error) 
-    {
-        console.log(error);
-        return res.sendStatus(500);
-    }
+    addTeamToWorkerQueue(req.files[0].location);
 });
 
 router.get('/newrentalteam', (req, res) => {
@@ -53,8 +37,16 @@ router.use((req, res, next) => {
 });
 
 async function addTeamToWorkerQueue (filePath) {
-    await createTeamQueue.add({ file: filePath });
-    console.log("Added job to Queue! Creating team from image: " + filePath);
+    try {
+        await createTeamQueue.add({ 
+            file: filePath
+        });
+        console.log("Added job to Queue! Creating team from image: " + filePath);
+    }
+
+    catch (error) {
+        console.log(error);
+    }
 }
 
 createTeamQueue.on ('global:completed', (job, result) => {

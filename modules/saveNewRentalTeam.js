@@ -135,6 +135,7 @@ async function adjustContrast (imagePath, outputFolder)
 {
     try 
     {
+        console.log(imagePath);
         const jimp = require('jimp');
         const outputPath = outputFolder + "/team.jpg";
     
@@ -159,10 +160,11 @@ async function adjustContrast (imagePath, outputFolder)
 
 async function extractImages(rentalTeamScreenshot, teamFolder) 
 {
-    const sharp = require('sharp');
-
     try 
     { 
+        const sharp = require('sharp');
+        const bucketUrl = 'https://' + keys.S3BucketName + '.s3.amazonaws.com/';
+        
         const adjustedImage = await adjustContrast(rentalTeamScreenshot, teamFolder); 
         const teamImage = sharp(adjustedImage);
 
