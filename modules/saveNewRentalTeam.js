@@ -7,6 +7,9 @@ require("../models/Team");
 
 const keys = require("../config/keys");
 
+// fs.writeFile('./googlevisionkey.json', keys.googlevisionkey.data, (err) => {
+//     console.log(err);
+// });
 
 const client = new vision.ImageAnnotatorClient({
     credentials: keys.googlevisionkey
@@ -164,7 +167,7 @@ async function extractImages(rentalTeamScreenshot, teamFolder)
     { 
         const sharp = require('sharp');
         const bucketUrl = 'https://' + keys.S3BucketName + '.s3.amazonaws.com/';
-        
+
         const adjustedImage = await adjustContrast(rentalTeamScreenshot, teamFolder); 
         const teamImage = sharp(adjustedImage);
 
