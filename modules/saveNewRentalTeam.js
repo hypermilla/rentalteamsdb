@@ -117,7 +117,7 @@ async function saveRentalTeamInfo (data) {
 
         const existingTeam = await Team.findOne({ rentalCode: data.rentalCode });
 
-        if (existingTeam) {
+        if (existingTeam != undefined) {
             console.log("This team has already been added!"); 
         }
         else {
