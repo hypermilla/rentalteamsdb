@@ -7,7 +7,7 @@ const keys = require('./config/keys');
 const upload = require("./modules/uploader");
 const newTeamManager = require("./modules/saveNewRentalTeam");
 
-const createTeamQueue = new Queue ('createRentalTeam', keys.REDIS_URL);
+const createTeamQueue = new Queue ('createRentalTeam', keys.redisURL);
 
 
 router.get("/", (req, res) => {
