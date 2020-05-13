@@ -112,22 +112,23 @@ async function saveRentalTeamInfo (data) {
 
     try 
     {
-        console.log("Saving Data to Mongo:");
-        console.log(data);
         const mongoose = require('mongoose'); 
         const Team = mongoose.model('teams'); 
 
-        const existingTeam = await Team.findOne({ rentalCode: data.rentalCode });
+        const rentalTeamData = JSON.parse(data);
+        console.log(rentalTeamData);
+
+        const existingTeam = await Team.findOne({ rentalCode: rentalTeamData.rentalCode });
 
         if (existingTeam && existingTeam != undefined) {
             console.log("This team has already been added!"); 
         }
         else {
             await new Team({ 
-                id: data.id,
-                ign: data.ign,
-                rentalCode: data.rentalCode,
-                pokemon: data.pokemon
+                id: rentalTeamData.id,
+                ign: rentalTeamData.ign,
+                rentalCode: rentalTeamData.rentalCode,
+                pokemon: rentalTeamData.pokemon
             }).save();  
 
             console.log("Rental Team data has been saved.");
