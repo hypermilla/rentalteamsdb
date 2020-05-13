@@ -112,6 +112,8 @@ async function saveRentalTeamInfo (data) {
 
     try 
     {
+        console.log("Saving Data to Mongo:");
+        console.log(data);
         const mongoose = require('mongoose'); 
         const Team = mongoose.model('teams'); 
 
