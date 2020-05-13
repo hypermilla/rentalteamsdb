@@ -11,8 +11,19 @@ const keys = require("../config/keys");
 //     console.log(err);
 // });
 
+let googleVisionKey;
+
+if (process.env.NODE_ENV === 'production') {
+    googleVisionKey = JSON.parse(keys.googlevisionkey);
+}
+else {
+    googleVisionKey = keys.googlevisionkey;
+}
+
+console.log("NODE ENV IS " + process.env.NODE_ENV);
+
 const client = new vision.ImageAnnotatorClient({
-    credentials: keys.googlevisionkey
+    credentials: googleVisionKey
 });
 
 let message = "Uploading image..."; 
