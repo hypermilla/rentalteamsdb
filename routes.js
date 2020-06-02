@@ -9,32 +9,44 @@ const newTeamManager = require("./modules/saveNewRentalTeam");
 
 const createTeamQueue = new Queue ('createRentalTeam', keys.redisURL);
 
-
 router.get("/", (req, res) => {
     res.render("index");
 });
 
-router.post("/upload", upload.uploadToS3.array('rentalTeamScreenshot', 1), (req, res, next) => {
-    console.log("Uploading image..."); 
+router.get("/api/fetch_team/:ign", async (req, res) => {
+	console.log("Fetch team request:" + req.param.ign);
+	const team = await newTeamManager.getTeamFromDB(req.params.ign); 
+	console.log(team);
+	res.send({data: team});
+});
 
-    res.render("upload", {
-        message: newTeamManager.message
-    });
 
-    console.log("Uploaded image to:");
+router.get("/api/test", (req, res) => {
+	console.log("Server: Got GET Request!");
+	res.send({text: "testing!!!"});
+});
+
+router.get("/test", (req, res) => {
+	res.send("<h1>You reached my server!</h1>");
+});
+
+router.post("/api/upload", (req, res, next) => {
+	res.send({ message: "Uploading..." });
+	console.log("Uploading image..."); 
+	next('route');
+});
+
+router.post ("/api/upload", upload.uploadToS3.array('rentalTeamScreenshot', 1), (req, res, next) => {
+	console.log("Uploaded image to:");
     console.log(req.files[0].location);
-
-    addTeamToWorkerQueue(req.files[0].location);
+	addTeamToWorkerQueue(req.files[0].location);
+	res.send({ message: "Image uploaded!" });
 });
-
-router.get('/newrentalteam', (req, res) => {
-    res.send(req.team); 
-});
-
 
 router.use((req, res, next) => {
-    res.status(404).send("<h1>Page not found!</h1>");
+    res.status(404).send("<h1>Page not found! But you reached my server!</h1>");
 });
+
 
 async function addTeamToWorkerQueue (filePath) {
     try {
@@ -48,6 +60,7 @@ async function addTeamToWorkerQueue (filePath) {
         console.log(error);
     }
 }
+
 
 createTeamQueue.on ('global:completed', (job, result) => {
     console.log("Job completed!");

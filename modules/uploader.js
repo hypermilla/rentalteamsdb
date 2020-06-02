@@ -34,22 +34,7 @@ const uploadToS3 = multer({
     })
   });
 
+const uploadRentalTeamImage = uploadToS3.single('rentalTeamScreenshot');
 
-//const memoryStorage = multer.memoryStorage();
-//const uploadToMemory = multer({ storage: memoryStorage }).single('rentalTeamScreenshot'); 
-
-
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, path.resolve(__dirname, '..', 'uploads'));
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.originalname);
-//     }
-// });
-
-//const upload = multer({storage: storage}).single('rentalTeamScreenshot'); 
-
-
+module.exports.uploadRentalTeamImage = uploadRentalTeamImage;
 module.exports.uploadToS3 = uploadToS3;
-//module.exports.uploadToMemory = uploadToMemory; 

@@ -361,16 +361,8 @@ function getRentalCodeData (results) {
 
     const detections = results[0].textAnnotations;
 
-    let teamID = detections[0].description.replace(/(\r\n|\n|\r)/gm, "");
-
-    // let teamID = "";
-
-    // for (i = 1; i < detections.length; i++) 
-    // {
-    //     if ( i < detections.length - 1 )
-    //         teamID += detections[i].description + "-";
-    //     else teamID += detections[i].description;
-    // }
+	let teamID = detections[0].description.replace(/(\r\n|\n|\r)/gm, "");
+	teamID.replace(/\s/g, '');
     
     return teamID;
 }
@@ -564,7 +556,6 @@ async function getVisionData (id, teamFolder)
 
 async function createRentalTeam (rentalTeamScreenshot)
 {
-
     const teamId = await createNewTeamID();
 
     const teamFolder = await createTeamFolder(teamId); 
@@ -578,6 +569,19 @@ async function createRentalTeam (rentalTeamScreenshot)
 }
 
 
+async function getTeamFromDB (ign) {
+	const mongoose = require('mongoose'); 
+	const Team = mongoose.model('teams'); 
+
+	const team = await Team.findOne({ ign: ign });
+
+	if (team) {
+		console.log(team);
+		return await team; 
+	}
+}
+
 module.exports.createRentalTeam = createRentalTeam;
 module.exports.saveTeamToMongoDB = saveRentalTeamInfo;
+module.exports.getTeamFromDB = getTeamFromDB;
 module.exports.message = message; 
