@@ -10,7 +10,7 @@ require("./models/Team");
 mongoose.connect(keys.mongoURI);
 
 const app = express();
-
+app.use('/', routes);
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 const PORT = keys.port; 
