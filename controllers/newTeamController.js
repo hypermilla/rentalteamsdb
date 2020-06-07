@@ -7,10 +7,6 @@ require("../models/Team");
 
 const keys = require("../config/keys");
 
-// fs.writeFile('./googlevisionkey.json', keys.googlevisionkey.data, (err) => {
-//     console.log(err);
-// });
-
 let googleVisionKey;
 
 if (process.env.NODE_ENV === 'production') {
@@ -24,9 +20,7 @@ console.log("NODE ENV IS " + process.env.NODE_ENV);
 
 const client = new vision.ImageAnnotatorClient({
     credentials: googleVisionKey
-});
-
-let message = "Uploading image..."; 
+}); 
 
 
 function createNewTeamID() 
@@ -34,8 +28,6 @@ function createNewTeamID()
     //Create team ID
     const teamId = crypto.randomBytes(20).toString('hex');
     console.log("Created new Team ID: " + teamId);
-
-    message = "Creating new Rental Team ID..."; 
 
     return teamId;
 }
@@ -50,7 +42,6 @@ async function createTeamFolder (teamId)
     { 
         await mkDirAsync(teamFolder);
         console.log("Created team folder without errors: " + teamFolder); 
-        message = "Created team folder without errors: " + teamFolder;
         return teamFolder;
     }
 
@@ -59,13 +50,11 @@ async function createTeamFolder (teamId)
         if (error.code == 'EEXIST') 
         {
             console.log("Created team folder: " + teamFolder); 
-            message = "Created team folder: " + teamFolder; 
             return teamFolder;
         }
         else 
         {
             console.log("Error creating folder: " + err);
-            message = "Error creating folder: " + err; 
             return null;
         }
     }
@@ -75,33 +64,24 @@ async function createTeamFolder (teamId)
 async function deleteTeamFolder (status, folder) 
 {
     
-    try 
-    { 
+    try { 
         const rimraf = require('rmfr'); 
 
-        if (status != "Success")
-        {
+        if (status != "Success") {
             console.log("Error - team data not saved yet");
-            message = "Error - team data not saved yet";
             return;
         }
 
         await rimraf(folder);
         console.log("Deleted team folder without errors.");
-        message = "Deleted team folder without errors.";
     }
 
-    catch (error)
-    {
-        if (error.code == 'EEXIST') 
-        {
+    catch (error) {
+        if (error.code == 'EEXIST') {
             console.log("Team Directory doesn't exist."); 
-            message = "Team Directory doesn't exist.";
         }
-        else 
-        {
+        else {
             console.log("Error deleting folder: " + error);
-            message = "Error deleting folder: " + error; 
         }
     }
 
@@ -110,8 +90,7 @@ async function deleteTeamFolder (status, folder)
 
 async function saveRentalTeamInfo (data) {
 
-    try 
-    {
+    try {
         const mongoose = require('mongoose'); 
         const Team = mongoose.model('teams'); 
 
@@ -132,16 +111,13 @@ async function saveRentalTeamInfo (data) {
             }).save();  
 
             console.log("Rental Team data has been saved.");
-            message = "Rental Team data has been saved."; 
         }
 
         return "Success";
     }
 
-    catch (error)
-    {
+    catch (error) {
         console.log("Error writing Teams data file");
-        message = "Error writing Teams data file"; 
         console.log(error);
         return "Failed"; 
     }
@@ -150,8 +126,7 @@ async function saveRentalTeamInfo (data) {
 
 async function adjustContrast (imagePath, outputFolder) 
 {
-    try 
-    {
+    try {
         console.log(imagePath);
         const jimp = require('jimp');
         const outputPath = outputFolder + "/team.jpg";
@@ -160,15 +135,12 @@ async function adjustContrast (imagePath, outputFolder)
         await image.contrast(0.4);
         const testImage = await image.writeAsync(outputPath);
         console.log("Saved image with high contrast");
-        message = "Saved image with high contrast";
         return await outputPath;
     }
 
-    catch (error)
-    {
+    catch (error) {
         console.log ("Error creating new image with high contrast.");
         console.log(error);
-        message = "Error creating new image with high contrast.";
     }
 
 }
@@ -177,8 +149,7 @@ async function adjustContrast (imagePath, outputFolder)
 
 async function extractImages(rentalTeamScreenshot, teamFolder) 
 {
-    try 
-    { 
+    try { 
         const sharp = require('sharp');
         const bucketUrl = 'https://' + keys.S3BucketName + '.s3.amazonaws.com/';
 
@@ -188,13 +159,11 @@ async function extractImages(rentalTeamScreenshot, teamFolder)
         await teamImage.extract({ left: 350, top: 585, width: 190, height: 40 })
         .toFile(teamFolder + "/ign.jpg", function (err){ 
             console.log("Saved IGN Image!");
-            message = "Saved IGN Image!";
         });
 
         await teamImage.extract({ left: 545, top: 630, width: 395, height: 45 })
         .toFile(teamFolder + "/rentalcode.jpg", function (err) { 
             console.log("Saved Rental Code Image!");
-            message = "Saved Rental Code Image!";
         });
 
 
@@ -202,79 +171,67 @@ async function extractImages(rentalTeamScreenshot, teamFolder)
         await teamImage.extract({ left: 80, top: 85, width: 260, height: 110 })
         .toFile(teamFolder + "/pokemon_01_info.jpg", function (err) { 
             console.log("Saved Pokemon 01 Info Image!");
-            message = "Saved Pokemon 01 Info Image!";
         });
 
         await teamImage.extract({ left: 240, top: 20, width: 100, height: 70 })
         .toFile(teamFolder + "/pokemon_01_type.jpg", function (err) { 
             console.log("Saved Pokemon 01 Type Image!");
-            message = "Saved Pokemon 01 Type Image!";
         });
 
         await teamImage.extract({ left: 395, top: 20, width: 220, height: 175 })
         .toFile(teamFolder + "/pokemon_01_moves.jpg", function (err) { 
             console.log("Saved Pokemon 01 Moves Image!");
-            message = "Saved Pokemon 01 Moves Image!";
         });
 
         //Pokemon 02
         await teamImage.extract({ left: 80, top: 275, width: 260, height: 110 })
         .toFile(teamFolder + "/pokemon_02_info.jpg", (err) => { 
             console.log("Saved Pokemon 02 Info Image!");
-            message = "Saved Pokemon 02 Info Image!"; 
         });
 
         const pokemon_02_type = teamFolder + "/pokemon_02_type.jpg";
         await teamImage.extract({ left: 240, top: 200, width: 100, height: 70 })
         .toFile(teamFolder + "/pokemon_02_type.jpg", function (err) { 
             console.log("Saved Pokemon 02 Type Image!");
-            message = "Saved Pokemon 02 Type Image!";
         });
 
         await teamImage.extract({ left: 395, top: 205, width: 220, height: 175 })
         .toFile(teamFolder + "/pokemon_02_moves.jpg", function (err) { 
             console.log("Saved Pokemon 02 Moves Image!");
-            message = "Saved Pokemon 02 Moves Image!";
         });
         
         //Pokemon 03
         await teamImage.extract({ left: 80, top: 465, width: 260, height: 110 })
         .toFile(teamFolder + "/pokemon_03_info.jpg", () => { 
             console.log("Saved Pokemon 03 Info Image!");
-            message = "Saved Pokemon 03 Info Image!";
         });
 
         await teamImage.extract({ left: 240, top: 395, width: 100, height: 70 })
         .toFile(teamFolder + "/pokemon_03_type.jpg", function (err) { 
             console.log("Saved Pokemon 03 Type Image!");
-            message = "Saved Pokemon 03 Type Image!";
         });
 
         await teamImage.extract({ left: 395, top: 395, width: 230, height: 175 })
         .toFile(teamFolder + "/pokemon_03_moves.jpg", function (err) { 
             console.log("Saved Pokemon 03 Moves Image!");
-            message = "Saved Pokemon 03 Moves Image!";
         });
 
         //Pokemon 04
         await teamImage.extract({ left: 665, top: 85, width: 260, height: 110 })
         .toFile(teamFolder + "/pokemon_04_info.jpg", function (err) { 
             console.log("Saved Pokemon 04 Info Image!");
-            message = "Saved Pokemon 04 Info Image!";
         });
 
         const pokemon_04_type = teamFolder + "/pokemon_04_type.jpg";
         const teamImage_pokemon_04_type = await teamImage.extract({ left: 820, top: 20, width: 100, height: 70 })
         .toFile(pokemon_04_type, function (err) { 
             console.log("Saved Pokemon 04 Type Image!")
-            message = "Saved Pokemon 04 Type Image!";
     });
 
         const pokemon_04_moves = teamFolder + "/pokemon_04_moves.jpg";
         const teamImage_pokemon_04_moves = await teamImage.extract({ left: 980, top: 20, width: 220, height: 175 })
         .toFile(pokemon_04_moves, function (err) { 
             console.log("Saved Pokemon 04 Moves Image!");
-            message = "Saved Pokemon 04 Moves Image!";
         });
 
         //Pokemon 05
@@ -283,21 +240,18 @@ async function extractImages(rentalTeamScreenshot, teamFolder)
         await teamImage.extract({ left: 665, top: 275, width: 260, height: 110 })
         .toFile(pokemon_05_info, function (err) { 
             console.log("Saved Pokemon 05 Info Image!");
-            message = "Saved Pokemon 05 Info Image!"; 
         });
 
         const pokemon_05_type = teamFolder + "/pokemon_05_type.jpg";
         await teamImage.extract({ left: 820, top: 200, width: 100, height: 70 })
         .toFile(pokemon_05_type, function (err) { 
             console.log("Saved Pokemon 05 Type Image!");
-            message = "Saved Pokemon 05 Type Image!";
         });
 
         const pokemon_05_moves = teamFolder + "/pokemon_05_moves.jpg";
         await teamImage.extract({ left: 980, top: 205, width: 220, height: 175 })
         .toFile(pokemon_05_moves, function (err) { 
             console.log("Saved Pokemon 05 Moves Image!");
-            message = "Saved Pokemon 05 Moves Image!"; 
         });
 
 
@@ -307,42 +261,33 @@ async function extractImages(rentalTeamScreenshot, teamFolder)
         const teamImage_pokemon_06_info = await teamImage.extract({ left: 665, top: 465, width: 260, height: 110 })
         .toFile(pokemon_06_info, function (err) { 
             console.log("Saved Pokemon 06 Info Image!");
-            message = "Saved Pokemon 06 Info Image!";
         });
 
         const pokemon_06_type = teamFolder + "/pokemon_06_type.jpg";
         const teamImage_pokemon_06_type = await teamImage.extract({ left: 820, top: 395, width: 100, height: 70 })
         .toFile(pokemon_06_type, function (err) { 
             console.log("Saved Pokemon 06 Type Image!");
-            message = "Saved Pokemon 06 Type Image!";
         });
 
         const pokemon_06_moves = teamFolder + "/pokemon_06_moves.jpg";
         const teamImage_pokemon_06_moves = await teamImage.extract({ left: 980, top: 395, width: 220, height: 175 })
         .toFile(pokemon_06_moves, function (err) { 
             console.log("Saved Pokemon 06 Moves Image!");
-            message = "Saved Pokemon 06 Moves Image!"; 
         });
         
     }
 
-    catch (error)
-    { 
+    catch (error) { 
         console.log("Error extracting images: " + error);
-        message = "Error extracting images: " + error;
     }
 
 }
-
-
-
 
 
 function getIgnData (results) {
 
     if (results == null){
         console.log ("ERROR - No detections from IGN image.");
-        message = "ERROR - No detections from IGN image.";
         return; 
     }
 
@@ -355,7 +300,6 @@ function getRentalCodeData (results) {
 
     if (results == null){
         console.log ("ERROR - No detections from Team ID image.");
-        message = "ERROR - No detections from Team ID image.";
         return; 
     }
 
@@ -374,7 +318,6 @@ function getPokemonTypeData (pokemonData, results) {
     if (results == null)
     {
         console.log ("ERROR - No detections from Pokemon Type image.");
-        message = "ERROR - No detections from Pokemon Type image.";
         return; 
     }
 
@@ -386,8 +329,7 @@ function getPokemonTypeData (pokemonData, results) {
         pokemonData.type2 = detections[2].description.replace(/(\r\n|\n|\r)/gm, "");
     }
     
-    return pokemonData;
-    
+    return pokemonData; 
 }
 
 
@@ -396,7 +338,6 @@ function getPokemonInfoData (pokemonData, results) {
 
     if (results == null){
         console.log ("ERROR - No detections from Pokemon " + number + " info image.");
-        message = "ERROR - No detections from Pokemon " + number + " info image.";
         return; 
     }
 
@@ -430,7 +371,6 @@ function getPokemonMovesData (pokemonData, results) {
 
     if (results == null){
         console.log ("ERROR - No detections from Pokemon " + number + " Moves image.");
-        message = "ERROR - No detections from Pokemon " + number + " Moves image.";
         return; 
     }
 
@@ -446,8 +386,7 @@ function getPokemonMovesData (pokemonData, results) {
 
 async function getVisionData (id, teamFolder)
 {
-    try 
-    {
+    try {
         let rentalTeamInfo = {}; 
         rentalTeamInfo.id = id;
 
@@ -458,7 +397,6 @@ async function getVisionData (id, teamFolder)
         const resultsRentalCode = await client.textDetection(teamFolder + "/rentalcode.jpg");
         rentalTeamInfo.rentalCode = await getRentalCodeData(resultsRentalCode); 
         console.log(rentalTeamInfo.rentalCode);
-
 
         rentalTeamInfo.pokemon = []; 
 
@@ -545,18 +483,15 @@ async function getVisionData (id, teamFolder)
 
     }
 
-    catch (error)
-    { 
+    catch (error){ 
         console.log("Error while processing Google Vision information.");
         console.log(error);
-        message = "Error while processing Google Vision information.";
     }
 }
 
 
-async function createRentalTeam (rentalTeamScreenshot)
+async function createRentalTeam (rentalTeamScreenshot, teamId)
 {
-    const teamId = await createNewTeamID();
 
     const teamFolder = await createTeamFolder(teamId); 
     await extractImages(rentalTeamScreenshot, teamFolder); 
@@ -581,7 +516,20 @@ async function getTeamFromDB (ign) {
 	}
 }
 
+
+async function fetchTeamById (id) {
+	const mongoose = require('mongoose'); 
+	const Team = mongoose.model('teams'); 
+
+	const team = await Team.findOne({ id: id });
+
+	if (team) {
+		return await team; 
+	}
+}
+
+module.exports.createNewTeamID = createNewTeamID;
 module.exports.createRentalTeam = createRentalTeam;
 module.exports.saveTeamToMongoDB = saveRentalTeamInfo;
 module.exports.getTeamFromDB = getTeamFromDB;
-module.exports.message = message; 
+module.exports.fetchTeamById = fetchTeamById;

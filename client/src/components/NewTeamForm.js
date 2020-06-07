@@ -1,41 +1,141 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, useState } from 'react';
+import axios from 'axios';
 
-import * as actions from '../actions';
+import Message from './Message';
+import ProgressBar from './ProgressBar';
 
-import { setUploadFile } from '../reducers/uploadFile/uploadFile.actions';
-import UploadProgress from './uploadProgress'; 
+import NewTeamInfoLoading from './NewTeamInfoLoading';
 
 
-class NewTeamForm extends Component {
 
-	constructor(props) {
-		super(props);
+const NewTeamForm = () => {
+
+	const [file, setFile] = useState('');
+	const [filename, setFilename] = useState('');
+	const [newTeamId, setNewTeamId] = useState(''); 
+	const [message, setMessage] = useState('');
+	const [uploadPercentage, setUploadPercentage] = useState(0);
+	const [isUploading, setIsUploading] = useState(false);
+	const [isInvalidImage, setIsInvalidImage] = useState(true);
+
+	const reader = new FileReader(); 
+
+	const onChange = e => {
+
+		setFile(e.target.files[0]);
+		setFilename(e.target.files[0].name);
+
+		if (!e.target.files[0] && !e.target.files) {
+			setMessage('No file selected');
+			setIsInvalidImage(false);
+			return false;  
+		}
+
+		if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
+			setMessage('Please select an image file.');
+			setIsInvalidImage(false);
+			return false;
+		}
+
+		reader.onload = (e) => {
+			const img = new Image();
+			img.onload = () => {
+				if (img.width != 1280 || img.height != 720) {
+					setMessage('Invalid image size!');
+					console.log(img.width, img.height);
+					setIsInvalidImage(false);
+					return false; 
+				}
+			};
+			img.onerror = () => {
+				setMessage ('Invalid image content');
+				setIsInvalidImage(false);
+				return false; 
+			};
+			img.src = e.target.result;	 
+		};
+		reader.readAsDataURL(e.target.files[0]);
+		setMessage('');
+		setIsInvalidImage(true);
 	}
 
-	uploadFile (e) {
-		console.log(e.target.files);
-		this.props.setUploadFile(e.target.files);
+	const onSubmit = async e => {
+		e.preventDefault();
+
+		if (file == '') {
+			setMessage("No file uploaded");
+			return; 
+		}
+
+		if (!isInvalidImage) {
+			setMessage(message);
+			return;
+		} 
+
+		const formData = new FormData(); 
+		formData.append('rentalTeamScreenshot', file);
+		setMessage("Uploading file...");
+		setIsUploading(true);
+
+		try {
+			const res = await axios.post('/api/upload', formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'					
+				},
+				onUploadProgress: progressEvent => {
+					setUploadPercentage(parseInt(Math.round(
+						(progressEvent.loaded * 100) / progressEvent.total))
+					);
+					setTimeout(() => setUploadPercentage(0), 15000);
+				}
+			});
+
+			setNewTeamId(res.data.newTeamId);
+			console.log(newTeamId);
+			setMessage("File uploaded!");
+		} 
+		catch (err) {
+			if (err.response.status === 500) {
+				setMessage('There was a problem with the server.');
+			}
+			else {
+				setMessage(err.response.data);
+			}
+		}
 	}
 
-	render () { 
-		return (
-			<div className="new-team-form">
-				<h1>Import your Rental Team Screenshot</h1>
-				<p>Share your Rental Team image from your Nintendo Switch and upload the PNG file here. 
-					<br />We will read the file and add your team to the database!
-				</p>
-				<input type="file" multiple onChange={(e) => this.uploadFile(e)} name="rentalTeamScreenshot" />
-				<UploadProgress />
+	return (
+		<div className="new-team-form">
+			<h1>Import your Rental Team Screenshot</h1>
+			<p>Share your Rental Team image from your Nintendo Switch and upload the PNG file here. 
+				<br />We will read the file and add your team to the database!
+			</p>
+
+			{ message ? <Message msg={message} /> : null }
+
+			<form onSubmit={onSubmit}>
+			<div class="custom-file">
+				<input type="file" name="rentalTeamScreenshot" className="custom-file-input" id="customFile" onChange={onChange} />
+				<label className="custom-file-label" htmlFor="customFile">
+					{filename}
+				</label>
 			</div>
-		);
-	}
+			<input type="submit" value="upload" className="btn btn-primary btn-block mt-4" />
+			</form>
+
+			{ isUploading ? <ProgressBar percentage={uploadPercentage} /> : null }
+
+			{ newTeamId ? <NewTeamInfoLoading /> : null }
+
+			{/* {imageUrl && <img src={imageUrl} alt="Uploaded File" height="100" width="100" />} */}
+
+
+		</div>
+	);
 }
 
 
-const mapDispatchToProps = dispatch => ({
-	setUploadFile: files => dispatch(setUploadFile(files))
-});
 
-export default connect(null, mapDispatchToProps)(NewTeamForm);
+
+export default NewTeamForm;
 

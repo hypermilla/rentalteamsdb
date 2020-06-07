@@ -20,7 +20,7 @@ async function start()
     
         workQueue.process(maxJobsPerWorker, async (job) => {
             console.log(job.data.file);
-            const data = await teamManager.createRentalTeam(job.data.file);
+            const data = await teamManager.createRentalTeam(job.data.file, job.data.teamId);
             console.log("Job finished");
             return data; 
         });
