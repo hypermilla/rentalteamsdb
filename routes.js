@@ -7,6 +7,7 @@ const upload = require("./controllers/uploadController");
 const newTeamController = require("./controllers/newTeamController");
 const workerQueueController = require("./controllers/workerQueueController");
 
+
 router.get("/api/test", (req, res) => {
 	console.log("Server: Got GET Request!");
 	res.send({text: "testing!!!"});
