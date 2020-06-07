@@ -5,7 +5,7 @@ const util = require('util');
 const path = require('path');
 require("../models/Team"); 
 
-const keys = require("../config/keys");
+const keys = require("../config/keys"); 
 
 let googleVisionKey;
 
@@ -15,8 +15,6 @@ if (process.env.NODE_ENV === 'production') {
 else {
     googleVisionKey = keys.googlevisionkey;
 }
-
-console.log("NODE ENV IS " + process.env.NODE_ENV);
 
 const client = new vision.ImageAnnotatorClient({
     credentials: googleVisionKey
@@ -32,8 +30,7 @@ function createNewTeamID()
     return teamId;
 }
 
-async function createTeamFolder (teamId) 
-{
+async function createTeamFolder (teamId) {
     //Create team image directory 
     const teamFolder = "./temp/team_" + teamId; 
     const mkDirAsync = util.promisify(fs.mkdir); 
@@ -95,7 +92,7 @@ async function saveRentalTeamInfo (data) {
         const Team = mongoose.model('teams'); 
 
         const rentalTeamData = JSON.parse(data);
-        console.log(rentalTeamData);
+        console.log('Created team data!');
 
         const existingTeam = await Team.findOne({ rentalCode: rentalTeamData.rentalCode });
 
@@ -104,7 +101,7 @@ async function saveRentalTeamInfo (data) {
         }
         else {
             await new Team({ 
-                id: rentalTeamData.id,
+                teamId: rentalTeamData.id,
                 ign: rentalTeamData.ign,
                 rentalCode: rentalTeamData.rentalCode,
                 pokemon: rentalTeamData.pokemon
@@ -127,7 +124,6 @@ async function saveRentalTeamInfo (data) {
 async function adjustContrast (imagePath, outputFolder) 
 {
     try {
-        console.log(imagePath);
         const jimp = require('jimp');
         const outputPath = outputFolder + "/team.jpg";
     
@@ -492,7 +488,6 @@ async function getVisionData (id, teamFolder)
 
 async function createRentalTeam (rentalTeamScreenshot, teamId)
 {
-
     const teamFolder = await createTeamFolder(teamId); 
     await extractImages(rentalTeamScreenshot, teamFolder); 
 

@@ -1,21 +1,22 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import Message from './Message';
 import ProgressBar from './ProgressBar';
 
 import NewTeamInfoLoading from './NewTeamInfoLoading';
-
-
+import NewTeamInfo from './NewTeamInfo'; 
 
 const NewTeamForm = () => {
 
 	const [file, setFile] = useState('');
 	const [filename, setFilename] = useState('');
 	const [newTeamId, setNewTeamId] = useState(''); 
+	const [newTeamData, setNewTeamData] = useState('');
 	const [message, setMessage] = useState('');
 	const [uploadPercentage, setUploadPercentage] = useState(0);
 	const [isUploading, setIsUploading] = useState(false);
+	const [isWaitingForTeamData, setWaitingForTeamData] = useState(false);
 	const [isInvalidImage, setIsInvalidImage] = useState(true);
 
 	const reader = new FileReader(); 
@@ -78,7 +79,7 @@ const NewTeamForm = () => {
 		setIsUploading(true);
 
 		try {
-			const res = await axios.post('/api/upload', formData, {
+			const res = await axios.post('/api/newteam', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'					
 				},
@@ -86,21 +87,20 @@ const NewTeamForm = () => {
 					setUploadPercentage(parseInt(Math.round(
 						(progressEvent.loaded * 100) / progressEvent.total))
 					);
-					setTimeout(() => setUploadPercentage(0), 15000);
+					//setTimeout(() => setUploadPercentage(0), 55000);
 				}
 			});
 
 			setNewTeamId(res.data.newTeamId);
-			console.log(newTeamId);
-			setMessage("File uploaded!");
+			setNewTeamData(res.data.newTeamData);
+			setMessage("Rental Team Data Generated!");
+			setIsUploading(false);
+
+			console.log(res.data);
 		} 
 		catch (err) {
-			if (err.response.status === 500) {
-				setMessage('There was a problem with the server.');
-			}
-			else {
-				setMessage(err.response.data);
-			}
+			setMessage('There was a problem with the server');
+			console.log(err);
 		}
 	}
 
@@ -124,11 +124,12 @@ const NewTeamForm = () => {
 			</form>
 
 			{ isUploading ? <ProgressBar percentage={uploadPercentage} /> : null }
-
-			{ newTeamId ? <NewTeamInfoLoading /> : null }
-
-			{/* {imageUrl && <img src={imageUrl} alt="Uploaded File" height="100" width="100" />} */}
-
+ 
+			<NewTeamInfo 
+				newTeamId={newTeamId} 
+				isWaitingForTeamData={isUploading}
+				newTeamData={newTeamData} 
+			/> 
 
 		</div>
 	);

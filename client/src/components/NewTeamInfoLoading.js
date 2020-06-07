@@ -1,14 +1,10 @@
-import React, { Component, useState } from 'react';
-import axios from 'axios';
-
+import React, { useState } from 'react';
 
 const NewTeamInfoLoading = () => {
-
 	return (
-
 		<button class="btn btn-primary mt-5 mx-auto" type="button" disabled>
 			<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
-			Waiting for new team data... 
+			Generating new team data... 
 		</button>
 	);
 

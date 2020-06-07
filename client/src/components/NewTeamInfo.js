@@ -1,25 +1,16 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import NewTeamInfoLoading from './NewTeamInfoLoading';
+import TeamDataPanel from './TeamDataPanel';
 
-
-const NewTeamInfo = () => {
-
-	const fetchNewTeamData = () => {
-		const res = await axios.post('/api/fetch_team/', formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data'					
-			},
-			onUploadProgress: progressEvent => {
-				setUploadPercentage(parseInt(Math.round(
-					(progressEvent.loaded * 100) / progressEvent.total))
-				);
-				setTimeout(() => setUploadPercentage(0), 15000);
-			}
-		});
-	}
-
+const NewTeamInfo = (props) => {
 	return (
-		
+		<div>
+			{ props.isWaitingForTeamData ? 
+				<NewTeamInfoLoading /> 
+			:	<TeamDataPanel teamData={props.newTeamData} />
+			}
+		</div>
 	);
 }
 

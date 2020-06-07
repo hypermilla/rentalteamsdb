@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router(); 
 const path = require('path');
-const imageSize = require('image-size');
 
 const keys = require('./config/keys');
 const upload = require("./controllers/uploadController");
@@ -20,6 +19,12 @@ router.get('/api/fetch_team/:ign', async (req, res) => {
 	res.send({data: team});
 });
 
+router.get('/api/fetch_team_by_id/:id', async (req, res) => {
+	console.log('Fetch team request:' + req.param.id); 
+	const team = await newTeamController.fetchTeamById(req.param.id); 
+	res.send({ team: team });
+});
+
 router.post ('/api/upload', upload.uploadRentalTeamImage, (req, res, next) => {
 	console.log('Uploaded image to AWS', req.file.location);
 
@@ -32,10 +37,28 @@ router.post ('/api/upload', upload.uploadRentalTeamImage, (req, res, next) => {
 	});
 });
 
-router.get('/api/fetch_team/:id', async (req, res) => {
-	console.log('Fetch team request:' + req.param.id); 
-	const team = await newTeamController.fetchTeamById(req.param.id); 
-	res.send({ data: team });
+router.post ('/api/newteam', upload.uploadRentalTeamImage, async (req, res, next) => {
+	console.log('Uploaded image to AWS', req.file.location);
+	try {
+		const newTeamId = await newTeamController.createNewTeamID();
+		const newTeamData = await newTeamController.createRentalTeam(req.file.location, newTeamId);
+		console.log('Generated new team', newTeamData);
+		res.send({
+			newTeamId: newTeamId,
+			imagePath: req.file.location,
+			newTeamData: newTeamData
+		});
+	}
+	catch (err) {
+		res.send({ msg: err});
+	}
+
+});
+
+router.get('/api/job_status/:jobid', async (req, res) => {
+	const jobStatus = workerQueueController.getJobStatus(req.param.jobid.ToString());
+	console.log('Accessed job status api call!', jobStatus);
+	res.send({ status: jobStatus });
 });
 
 router.use((req, res, next) => {

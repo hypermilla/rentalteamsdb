@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 //const { Schema } = mongoose; 
 
 const teamSchema = new Schema({
-    "id": String,
+    "teamId": String,
     "ign": String,
     "rentalCode": String,
     "pokemon": [

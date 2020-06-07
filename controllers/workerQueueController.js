@@ -1,17 +1,17 @@
-const Queue = require('bull');
+const bull = require('bull');
 const keys = require('../config/keys');
 const newTeamController = require('./newTeamController'); 
 
 
-const createTeamQueue = new Queue ('createRentalTeam', keys.redisURL);
+const createTeamQueue = new bull ('createRentalTeam', keys.redisURL);
 
 async function addTeamToWorkerQueue (file, teamId) {
     try {
         await createTeamQueue.add({ 
 			file: file,
 			teamId: teamId
-        });
-        console.log("Added job to Queue! Creating team from image: " + file);
+        }, { jobId: teamId });
+		console.log("Added job to Queue! Creating team from image: " + file);
     }
 
     catch (error) {
@@ -24,4 +24,11 @@ createTeamQueue.on ('global:completed', (job, result) => {
     newTeamController.saveTeamToMongoDB(result);
 });
 
+const getJobStatus = (jobId) => {
+	const myJob = bull.getJob(jobId);
+	console.log(myJob);
+	return myJob;
+}
+
 module.exports.addTeamToWorkerQueue = addTeamToWorkerQueue; 
+module.exports.getJobStatus = getJobStatus;
