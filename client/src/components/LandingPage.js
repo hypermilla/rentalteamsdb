@@ -7,7 +7,7 @@ const LandingPage = () => {
 
     return (
         <div className="landing">
-			<h1>Oi Edu!!!</h1>
+			<h1>Rental Teams DB</h1>
             <Link to="/newteam" type="button" className="btn btn-primary">
                 Add New Rental Team
             </Link>

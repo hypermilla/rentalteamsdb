@@ -7,7 +7,9 @@ const NewTeamInfo = (props) => {
 		<div>
 			{ props.isWaitingForTeamData ? 
 				<NewTeamInfoLoading /> 
-			:	<TeamDataPanel teamData={props.newTeamData} />
+			:	<div className="new-team-info">
+					<TeamDataPanel teamData={props.newTeamData} />
+				</div>
 			}
 		</div>
 	);

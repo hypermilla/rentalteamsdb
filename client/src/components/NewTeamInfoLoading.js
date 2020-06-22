@@ -7,7 +7,6 @@ const NewTeamInfoLoading = () => {
 			Generating new team data... 
 		</button>
 	);
-
 }
 
 export default NewTeamInfoLoading; 
