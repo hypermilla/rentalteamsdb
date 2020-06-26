@@ -1,6 +1,6 @@
 import React from 'react';
 import NewTeamInfoLoading from './NewTeamInfoLoading';
-import TeamDataPanel from './TeamDataPanel';
+import TeamInfo from './TeamInfo';
 
 const NewTeamInfo = (props) => {
 	return (
@@ -8,7 +8,7 @@ const NewTeamInfo = (props) => {
 			{ props.isWaitingForTeamData ? 
 				<NewTeamInfoLoading /> 
 			:	<div className="new-team-info">
-					<TeamDataPanel teamData={props.newTeamData} />
+					<TeamInfo teamData={props.newTeamData} />
 				</div>
 			}
 		</div>

@@ -11,18 +11,34 @@ const PokemonInfo = (props) => {
 		</li>
 	);
 
+	function getPokemonTypeClass(pokemonType) {
+		if (pokemonType == undefined) {
+			return "badge badge-primary ";
+		}
+		let pokemonTypeClass = "badge badge-primary " + pokemonType.toLowerCase();
+		return pokemonTypeClass;
+	}
+
 	return (
-		<div className="pokemon-info">
-			<div className="pokemon-sprite">
-				<img src={pkmnSprite} />
+		<div className="pokemon-info card bg-dark shadow">
+			<div className="card-img-top">
+				<img className="pokemon-sprite" src={pkmnSprite} />
 			</div>
-			<div className="pokemon-name">{props.name}</div>
-			<div className="pokemon-type">{props.type1} {props.type2}</div>
-			<div className="pokemon-item">{props.item}</div>
-			<div className="pokemon-ability">{props.ability}</div>
-			<div className="pokemon-moveset">
-				<ul>
-					{moveset}
+			<div class="card-body">
+				<h5 className="pokemon-name card-title">{props.name}</h5>
+				<div className="pokemon-type">
+					<span className={getPokemonTypeClass(props.type1)}>{props.type1}</span> &nbsp;
+					<span className={getPokemonTypeClass(props.type2)}>{props.type2}</span>
+				</div>
+				<ul class="list-group list-group-flush bg-dark">
+					<li className="pokemon-item list-group-item bg-dark">{props.item}</li>
+					<li className="pokemon-ability list-group-item bg-dark">{props.ability}</li>
+					<li className="pokemon-moveset list-group-item bg-dark">
+					<ul>
+						{moveset}
+					</ul>
+				</li>
+
 				</ul>
 			</div>
 		</div>

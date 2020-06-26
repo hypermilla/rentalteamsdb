@@ -1,3 +1,9 @@
+html {
+	width: 100%;
+	height: 100%;
+	background-color: #23272a;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,6 +16,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.bg-darker {
+	background-color: #23272a;
 }
 
 .App {
@@ -33,50 +43,139 @@ code {
   font-size: 1.4em;
 }
 
-/* file upload form */ 
+.shadow {
+	-webkit-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
+	-moz-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
+	box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
+}
 
-.files input {
-    outline: 2px dashed #92b0b3;
-    outline-offset: -10px;
-    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    padding: 120px 0px 85px 35%;
-    text-align: center !important;
-    margin: 0;
-    width: 100% !important;
+
+.new-team-form form {
+	padding-bottom: 40px;
 }
-.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
-    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
- }
-.files{ position:relative}
-.files:after {  pointer-events: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 50px;
-    right: 0;
-    height: 56px;
-    content: "";
-    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
-    display: block;
-    margin: 0 auto;
-    background-size: 100%;
-    background-repeat: no-repeat;
+
+.team-info .card-body p {
+
 }
-.color input{ background-color:#f1f1f1;}
-.files:before {
-    position: absolute;
-    bottom: 10px;
-    left: 0;  pointer-events: none;
-    width: 100%;
-    right: 0;
-    height: 57px;
-    content: " or drag it here. ";
-    display: block;
-    margin: 0 auto;
-    color: #2ea591;
-    font-weight: 600;
-    text-transform: capitalize;
-    text-align: center;
+
+.pokemon-item .list-group-item  {
+	border-top-width: 1px;
+}
+
+.team-info.card {
+	max-width: 85%;
+	margin: 0 auto;
+	display: block;
+	background-color: #444a52;
+}
+
+.team-pokemon {
+	padding: 0rem 2rem 0rem 2rem;
+}
+
+.card-deck .pokemon-info.card {
+	min-width: 14rem;
+	margin-bottom: 2rem;
+	border-color: none;
+}
+
+.card-img-top {
+	background-image: url(../src/img/pokeball.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	text-align: center;
+	padding: 2rem;
+	height: 10rem;
+	border-color: none;
+}
+
+.card-img-top img {
+	margin: 0 auto;
+	text-align: left;
+}
+
+.card-title {
+	margin-bottom: 0.25rem;
+}
+
+.pokemon-info .card-body {
+	padding: 2rem 0 2rem 0;
+}
+
+.card-body p, .card-body h5, .card-body h4, .card-body div {
+	padding: 0 1.25rem 0 1.25rem;
+}
+
+.team-ign, .team-code {
+	color: #30c09e;
+	font-weight: bolder;
+}
+
+.badge.normal {
+	background-color: #a9a878;
+}
+
+.badge.fire {
+	background-color: #f17f2e;
+}
+
+.badge.fighting {
+	background-color: #c02f27;
+}
+
+.badge.bug {
+	background-color: #a8b820;
+}
+
+.badge.ghost {
+	background-color: #4404a7;
+}
+
+.badge.electric {
+	background-color: #f9d130;
+}
+
+.badge.flying {
+	background-color: #a990f1;
+}
+
+.badge.steel {
+	background-color: #b8b8d0;
+}
+
+.badge.psychic {
+	background-color: #f95788;
+}
+
+.badge.poison {
+	background-color: #a03fa1;
+}
+
+.badge.ice {
+	background-color: #98d9d9;
+}
+
+.badge.ground {
+	background-color: #e2c168;
+}
+
+.badge.water {
+	background-color: #6890f0;
+}
+
+.badge.dragon {
+	background-color: #6f37f9;
+}
+
+.badge.rock{
+	background-color: #b89f38;
+}
+
+.badge.grass {
+	background-color: #78c850;
+}
+
+.badge.dark {
+	background-color: #6f5747;
 }

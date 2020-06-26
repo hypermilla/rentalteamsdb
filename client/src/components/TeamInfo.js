@@ -1,10 +1,10 @@
 import React from 'react';
 import PokemonInfo from './PokemonInfo';
 
-//import teamData from '../data/teams.json';
+import teamData from '../data/teams.json';
 
 
-const TeamDataPanel = (props) => {
+const TeamInfo = (props) => {
 	if (!props.teamData) {
 		return null;
 	}
@@ -12,9 +12,11 @@ const TeamDataPanel = (props) => {
 	//const data = JSON.parse(teamData);
 	//const team = teamData[0];
 	const team = props.teamData;
+
 	console.log(team);
 	const pokemon = team.pokemon.map((poke) => 
-		<PokemonInfo
+
+	<PokemonInfo
 			name={poke.name} 
 			type1={poke.type1}
 			type2={poke.type2}
@@ -25,22 +27,19 @@ const TeamDataPanel = (props) => {
 	);
 
 	return (
-		<div>
-			<div className="team-data-panel">
-				<div className="team-ign">
-					IGN: {team.ign}
+		<div class="team-info card">
+				<div className="card-header">
+					Your Team Info: 
 				</div>
-				<div className="team-ign">
-					Rental Code: {team.rentalCode}
+				<div className="card-body">
+					<h4>IGN: <span className="team-ign">{team.ign}</span></h4>
+					<h4>Rental Code: <span className="team-code">{team.rentalCode}</span></h4>
 				</div>
-				<div className="team-pokemon">
-					<ul>
+				<div className="team-pokemon card-deck">
 						{pokemon}
-					</ul>
 				</div>
-			</div>
 		</div>
 	);
 }
 
-export default TeamDataPanel;
+export default TeamInfo;
