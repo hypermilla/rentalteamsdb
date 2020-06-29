@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import Header from './Header';
 import LandingPage from './LandingPage';
 import NewTeamForm from './NewTeamForm';
+import TeamInfo from './TeamInfo';
 
 
 class App extends Component  
@@ -17,7 +17,8 @@ class App extends Component
 				<div className="container bg-darker">
 					<Switch>
 						<Route exact path="/" component={LandingPage} />
-						<Route path="/newteam" component={NewTeamForm} />	
+						<Route path="/newteam" component={NewTeamForm} />
+						<Route path="/team/:id" component={TeamInfo} />	
 					</Switch>
 				</div>
 			</div>
@@ -26,8 +27,4 @@ class App extends Component
 	}
 }
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

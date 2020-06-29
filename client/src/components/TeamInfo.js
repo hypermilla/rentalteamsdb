@@ -15,14 +15,13 @@ const TeamInfo = (props) => {
 
 	console.log(team);
 	const pokemon = team.pokemon.map((poke) => 
-
-	<PokemonInfo
-			name={poke.name} 
-			type1={poke.type1}
-			type2={poke.type2}
-			item={poke.item}
-			ability={poke.ability}
-			moveset={poke.moveset}
+		<PokemonInfo
+				name={poke.name} 
+				type1={poke.type1}
+				type2={poke.type2}
+				item={poke.item}
+				ability={poke.ability}
+				moveset={poke.moveset}
 		/>
 	);
 

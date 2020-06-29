@@ -48,6 +48,7 @@ const NewTeamForm = () => {
 					return false; 
 				}
 			};
+
 			img.onerror = () => {
 				setMessage ('Invalid image content');
 				setIsInvalidImage(false);
@@ -93,7 +94,7 @@ const NewTeamForm = () => {
 
 			setNewTeamId(res.data.newTeamId);
 			setNewTeamData(res.data.newTeamData);
-			setMessage("Rental Team Data Generated!");
+			setMessage("Rental Team Data Generated! New Team Saved to the Database!");
 			setIsUploading(false);
 
 			console.log(res.data);
@@ -114,7 +115,7 @@ const NewTeamForm = () => {
 			{ message ? <Message msg={message} /> : null }
 
 			<form onSubmit={onSubmit}>
-			<div class="custom-file">
+			<div className="custom-file">
 				<input type="file" name="rentalTeamScreenshot" className="custom-file-input" id="customFile" onChange={onChange} />
 				<label className="custom-file-label" htmlFor="customFile">
 					{filename}
@@ -134,9 +135,6 @@ const NewTeamForm = () => {
 		</div>
 	);
 }
-
-
-
 
 export default NewTeamForm;
 

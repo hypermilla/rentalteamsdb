@@ -22,6 +22,12 @@ code {
 	background-color: #23272a;
 }
 
+.shadow {
+	-webkit-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
+	-moz-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
+	box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
+}
+
 .App {
   text-align: center;
   width: 100%;
@@ -38,17 +44,122 @@ code {
   margin: 0 auto;
 }
 
+.header {
+	padding: 2em;
+}
+
+.header h1 {
+	font-size: 2.3em;
+}
+
+.new-team-btn {
+
+}
+
+.landing {
+	text-align: center;
+}
+
+.landing h3 {
+	font-weight: bolder;
+}
+
+.search-bar {
+	/* display: flex;
+	align-items: baseline; */
+	margin: auto;
+	width: 100%;
+	position: relative;
+	z-index: 1;
+	margin-top: 20px;
+}
+
 .search-bar input {
-  padding: 20px;
+  /* padding: 1.2em; */
   font-size: 1.4em;
+  /* max-width: 32em; */
+  /* flex-grow: 0; */
+  /* display: inline-flex; */
+  background-color: #f2f2f2;
+  font-weight: 300;
+  padding: 20px 40px;
+  width: 100%;
+  -webkit-box-shadow: 3px 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 3px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 3px 20px 0px rgba(0, 0, 0, 0.1);
+  outline: none;
+  border-radius: 20px;
+  border: none; 
 }
 
-.shadow {
-	-webkit-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
-	-moz-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
-	box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.44);
+.search-bar .btn {
+	margin-left: 0.6em;
+	padding: 0.5em;
+	font-size: 1.4em;
 }
 
+
+.search-grid {
+	width: 100%;
+	text-align: left;
+	margin-top: -20px;
+}
+
+.search-grid ul {
+	display: block;
+	width: 100%;
+	padding: 0px;
+	position: absolute;
+	z-index: 0; 
+	margin-bottom: 80px;
+}
+
+.search-grid li {
+	position: relative;
+	background-color: #f2f2f2;
+	width: inherit;
+	z-index: 2;
+	cursor: pointer;
+	border-top: none;
+	border-bottom: 1px solid #aacece;
+	padding: 1em;
+	list-style: none;
+	font-size: 1em;
+  }
+
+.search-grid li span.badge {
+	font-size: 1em;
+	margin: 0.2em;
+	padding: 0.6em;
+}
+.search-grid li p.pokemon {
+	font-size: 1.2em;
+	padding: 0.6em;
+	color: #181827;
+}
+  
+  .search-grid li:first-child {
+	padding-top: 15px;
+  }
+  
+  .search-grid li:last-child {
+	border-radius: 0px 0px 20px 20px !important;
+	-webkit-box-shadow: 3px 3px 20px 0px rgba(0,0,0,0.25);
+	-moz-box-shadow: 3px 3px 20px 0px rgba(0,0,0,0.25);
+	box-shadow: 2px 5px 5px 0px rgba(0,0,0,0.05);
+  }
+  
+  .search-grid li:hover {
+	background-color:  #97d8d8;
+  }
+  
+  .search-grid li.active {
+	background-color:  #b6e7e7;
+	border: none;
+	outline: none;
+  }
+  
+  
 
 .new-team-form form {
 	padding-bottom: 40px;

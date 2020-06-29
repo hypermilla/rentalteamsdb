@@ -89,15 +89,14 @@ async function saveRentalTeamInfo (data) {
 
     try {
         const mongoose = require('mongoose'); 
-        const Team = mongoose.model('teams'); 
+		const Team = mongoose.model('teams'); 
 
-        const rentalTeamData = JSON.parse(data);
-        console.log('Created team data!');
+        const rentalTeamData = data;
 
-        const existingTeam = await Team.findOne({ rentalCode: rentalTeamData.rentalCode });
+        const existingTeam = await Team.findOne({ rentalCode: rentalTeamData.id });
 
         if (existingTeam && existingTeam != undefined) {
-            console.log("This team has already been added!"); 
+            throw "This team has already been added!"; 
         }
         else {
             await new Team({ 
@@ -472,9 +471,6 @@ async function getVisionData (id, teamFolder)
 
         rentalTeamInfo.pokemon.push(pokemonData);
 
-    
-        console.log(rentalTeamInfo);
-
         return rentalTeamInfo; 
 
     }
@@ -492,27 +488,34 @@ async function createRentalTeam (rentalTeamScreenshot, teamId)
     await extractImages(rentalTeamScreenshot, teamFolder); 
 
     const rentalTeamData = await getVisionData(teamId, teamFolder);
-    // const status = await saveRentalTeamInfo(rentalTeamData);
-    await deleteTeamFolder("Success", teamFolder);
+    const status = await saveRentalTeamInfo(rentalTeamData);
+    await deleteTeamFolder(status, teamFolder);
 
     return rentalTeamData;
 }
 
+async function fetchTeamsData() {
+	const mongoose = require('mongoose'); 
+	const Team = mongoose.model('teams'); 
 
-async function getTeamFromDB (ign) {
+	const teams = await Team.find({}); 
+	return teams;
+}
+
+async function fetchTeamByIgn(ign) {
 	const mongoose = require('mongoose'); 
 	const Team = mongoose.model('teams'); 
 
 	const team = await Team.findOne({ ign: ign });
-
 	if (team) {
 		console.log(team);
 		return await team; 
 	}
+	else return "No teams found";
 }
 
 
-async function fetchTeamById (id) {
+async function fetchTeamById(id) {
 	const mongoose = require('mongoose'); 
 	const Team = mongoose.model('teams'); 
 
@@ -526,5 +529,6 @@ async function fetchTeamById (id) {
 module.exports.createNewTeamID = createNewTeamID;
 module.exports.createRentalTeam = createRentalTeam;
 module.exports.saveTeamToMongoDB = saveRentalTeamInfo;
-module.exports.getTeamFromDB = getTeamFromDB;
+module.exports.fetchTeamByIgn = fetchTeamByIgn;
 module.exports.fetchTeamById = fetchTeamById;
+module.exports.fetchTeamsData = fetchTeamsData;
