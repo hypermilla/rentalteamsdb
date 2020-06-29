@@ -93,10 +93,10 @@ async function saveRentalTeamInfo (data) {
 
         const rentalTeamData = data;
 
-        const existingTeam = await Team.findOne({ rentalCode: rentalTeamData.id });
+        const existingTeam = await Team.findOne({ rentalCode: rentalTeamData.rentalCode });
 
         if (existingTeam && existingTeam != undefined) {
-            throw "This team has already been added!"; 
+			throw "This team has already been added!";
         }
         else {
             await new Team({ 
