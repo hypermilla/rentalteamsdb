@@ -40,7 +40,7 @@
     "start": "node ./server.js",
     "client": "npm run start --prefix client",
     "worker": "node ./worker.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run worker\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "npm install --only=dev --prefix client && npm install --prefix client && npm run build --prefix client"
   },
   "repository": {

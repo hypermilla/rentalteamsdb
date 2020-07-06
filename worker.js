@@ -3,7 +3,7 @@ const Queue = require('bull');
 
 const keys = require('./config/keys');
 
-const teamManager = require('./modules/saveNewRentalTeam');
+const newTeam = require('./controllers/newTeamController');
 
 let REDIS_URL = keys.redisURL;
 
@@ -19,9 +19,16 @@ async function start()
         let workQueue = new Queue('createRentalTeam', REDIS_URL);
     
         workQueue.process(maxJobsPerWorker, async (job) => {
-            console.log(job.data.file);
-            const data = await teamManager.createRentalTeam(job.data.file, job.data.teamId);
-            console.log("Job finished");
+			console.log("Performing job", job.id, job.data.file);
+			await job.log("Setting up...");
+			//const data = await newTeam.createRentalTeam(job.data.file, job.data.teamId);
+			const folder = await newTeam.createTeamFolder(job.data.teamId);
+			await job.log("Extracting images...");
+			await newTeam.extractImages(job.data.file, folder);
+			await job.log("Reading text from images...");
+			const data = await newTeam.getVisionData(job.data.teamId, folder);
+			await job.log("Finished generating team data!");
+            console.log("Job finished", data);
             return data; 
         });
     }

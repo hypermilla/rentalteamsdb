@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router(); 
 const path = require('path');
 
-const keys = require('./config/keys');
 const upload = require("./controllers/uploadController");
 const newTeamController = require("./controllers/newTeamController");
 const workerQueueController = require("./controllers/workerQueueController");
-
 
 router.get('/api/fetch_team/:ign', async (req, res) => {
 	console.log('Fetch team request:' + req.param.ign);
@@ -39,6 +37,21 @@ router.post ('/api/upload', upload.uploadRentalTeamImage, (req, res, next) => {
 	});
 });
 
+router.get('/api/team_job_status/:jobId', async (req, res) => {
+	console.log('Job Status Requested:', req.params.jobId); 
+	const status = await workerQueueController.getJobStatus(req.params.jobId);
+	res.send({ 
+		progress: status.progress, 
+		logs: status.logs,
+		state: status.state,
+		result: status.result,
+	});
+});
+
+router.get('/api/team_job_results/:jobId', async (req, res) => {
+	
+});
+
 router.post ('/api/newteam', upload.uploadRentalTeamImage, async (req, res, next) => {
 	console.log('Uploaded image to AWS', req.file.location);
 	try {
@@ -65,5 +78,4 @@ router.use((req, res, next) => {
 	res.status(404).send("<h1>Page not found! But you reached my server!</h1>");
 });
 
-
-module.exports = router; 
+module.exports = router;

@@ -3,9 +3,11 @@ const crypto = require('crypto');
 const fs = require('fs');
 const util = require('util');
 const path = require('path');
+const bull = require('bull');
 require("../models/Team"); 
 
 const keys = require("../config/keys"); 
+const { LexModelBuildingService } = require('aws-sdk');
 
 let googleVisionKey;
 
@@ -484,12 +486,13 @@ async function getVisionData (id, teamFolder)
 
 async function createRentalTeam (rentalTeamScreenshot, teamId)
 {
-    const teamFolder = await createTeamFolder(teamId); 
+	const teamFolder = await createTeamFolder(teamId); 
     await extractImages(rentalTeamScreenshot, teamFolder); 
 
-    const rentalTeamData = await getVisionData(teamId, teamFolder);
+	const rentalTeamData = await getVisionData(teamId, teamFolder);
+	console.log("Rental team data created", rentalTeamData);
     const status = await saveRentalTeamInfo(rentalTeamData);
-    await deleteTeamFolder(status, teamFolder);
+	await deleteTeamFolder(status, teamFolder);
 
     return rentalTeamData;
 }
@@ -529,6 +532,12 @@ async function fetchTeamById(id) {
 module.exports.createNewTeamID = createNewTeamID;
 module.exports.createRentalTeam = createRentalTeam;
 module.exports.saveTeamToMongoDB = saveRentalTeamInfo;
+
 module.exports.fetchTeamByIgn = fetchTeamByIgn;
 module.exports.fetchTeamById = fetchTeamById;
 module.exports.fetchTeamsData = fetchTeamsData;
+
+module.exports.createTeamFolder = createTeamFolder;
+module.exports.extractImages = extractImages;
+module.exports.getVisionData = getVisionData;
+module.exports.deleteTeamFolder = deleteTeamFolder;

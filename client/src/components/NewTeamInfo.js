@@ -7,7 +7,7 @@ const NewTeamInfo = (props) => {
 	return (
 		<div>
 			{ props.isWaitingForTeamData ? 
-				<NewTeamInfoLoading /> 
+				<NewTeamInfoLoading status={props.status} /> 
 			:	<div className="new-team-info">
 					<TeamInfo teamData={props.newTeamData} />
 				</div>

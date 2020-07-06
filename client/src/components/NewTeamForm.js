@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Message from './Message';
@@ -18,6 +18,8 @@ const NewTeamForm = () => {
 	const [isUploading, setIsUploading] = useState(false);
 	const [isWaitingForTeamData, setWaitingForTeamData] = useState(false);
 	const [isInvalidImage, setIsInvalidImage] = useState(true);
+	const [jobStatus, setJobStatus] = useState('Analysing image...');
+	const [statusUpdateCount, setStatusUpdateCount] = useState(0);
 
 	const reader = new FileReader(); 
 
@@ -80,7 +82,7 @@ const NewTeamForm = () => {
 		setIsUploading(true);
 
 		try {
-			const res = await axios.post('/api/newteam', formData, {
+			const res = await axios.post('/api/upload', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'					
 				},
@@ -93,17 +95,49 @@ const NewTeamForm = () => {
 			});
 
 			setNewTeamId(res.data.newTeamId);
-			setNewTeamData(res.data.newTeamData);
-			setMessage("Rental Team Data Generated! New Team Saved to the Database!");
+			//setNewTeamData(res.data.newTeamData);
+			setMessage("Image uploaded. Generating team data...");
 			setIsUploading(false);
-
-			console.log(res.data);
+			setWaitingForTeamData(true);
+			setStatusUpdateCount(1);
+			setJobStatus("Generating Team Data from image...");
+			//console.log(res.data);
 		} 
 		catch (err) {
 			setMessage('There was a problem with the server');
 			console.log(err);
 		}
 	}
+
+	useEffect(() => {
+		const getNewTeamData = async (newTeamId) => {
+			const url = '/api/team_job_status/' + newTeamId;
+			console.log("Fetching Job Status!", statusUpdateCount, url);
+			let status = await axios.get(url); 
+			console.log(status);
+			return status;
+		};
+
+		if (isWaitingForTeamData) {
+			setTimeout(async () => {
+				const status = await getNewTeamData(newTeamId);
+				console.log("Data:", status.data);	
+				console.log("Logs: ", status.data.logs);
+				if (status.data.state == "completed") {
+					//fetch completed job data 		
+					setWaitingForTeamData(false);
+					setNewTeamData(status.data.result);
+					setJobStatus("Team Data Generated!");
+					setMessage("Team data generated! Please check your new team.");
+				}
+				else {
+					setStatusUpdateCount(statusUpdateCount + 1);
+					setWaitingForTeamData(true);	
+					setJobStatus(status.data.logs.logs[status.data.logs.count - 1]);
+				}
+			}, 1000);
+		}
+	}, [statusUpdateCount]);
 
 	return (
 		<div className="new-team-form">
@@ -128,8 +162,9 @@ const NewTeamForm = () => {
  
 			<NewTeamInfo 
 				newTeamId={newTeamId} 
-				isWaitingForTeamData={isUploading}
+				isWaitingForTeamData={isWaitingForTeamData}
 				newTeamData={newTeamData} 
+				status={jobStatus}
 			/> 
 
 		</div>
