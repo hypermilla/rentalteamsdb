@@ -7,7 +7,7 @@ const PokemonInfo = (props) => {
 
 	const moveset = props.moveset.map((move, i) =>
 		<li key={i}>
-			{move}
+			Move {i+1}: {move}
 		</li>
 	);
 
@@ -27,12 +27,20 @@ const PokemonInfo = (props) => {
 			<div class="card-body">
 				<h5 className="pokemon-name card-title">{props.name}</h5>
 				<div className="pokemon-type">
-					<span className={getPokemonTypeClass(props.type1)}>{props.type1}</span> &nbsp;
-					<span className={getPokemonTypeClass(props.type2)}>{props.type2}</span>
+					<span className={getPokemonTypeClass(props.type1)}>
+						{props.type1}
+					</span> &nbsp;
+					<span className={getPokemonTypeClass(props.type2)}>
+						{props.type2}
+					</span>
 				</div>
 				<ul class="list-group list-group-flush bg-dark">
-					<li className="pokemon-item list-group-item bg-dark">{props.item}</li>
-					<li className="pokemon-ability list-group-item bg-dark">{props.ability}</li>
+					<li className="pokemon-item list-group-item bg-dark">
+						Item: {props.item}
+					</li>
+					<li className="pokemon-ability list-group-item bg-dark">
+						Ability: {props.ability}
+					</li>
 					<li className="pokemon-moveset list-group-item bg-dark">
 					<ul>
 						{moveset}

@@ -17,7 +17,7 @@ const SearchBar = (props) => {
 		setValue(newValue);
 		if (newValue.length < 1)
 			setResultsActive(false);
-		else if (newValue.length > 2) {
+		else if (newValue.length > 0) {
 			props.onTermChange(newValue);
 			setResultsActive(true);
 		}

@@ -59,9 +59,6 @@ const LandingPage = () => {
 					teamData={teamData}
 				/>
 			: null }
-
-
-			<a href="/api/fetch_teams" type="button" className="btn btn-primary">Test API</a>
         </div>
     );
 }

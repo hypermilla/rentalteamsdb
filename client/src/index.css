@@ -223,6 +223,24 @@ code {
 	font-weight: bolder;
 }
 
+.pokemon-info.card span, ul, li {
+	text-align: left;
+}
+
+.pokemon-moveset ul {
+	padding: 0;
+	margin: 0;
+}
+.pokemon-moveset ul li {
+	list-style: none;
+	text-align: left;	
+}
+
+
+
+
+/* type badge colors */ 
+
 .badge.normal {
 	background-color: #a9a878;
 }

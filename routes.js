@@ -20,8 +20,8 @@ router.get('/api/fetch_team_by_id/:id', async (req, res) => {
 });
 
 router.get('/api/fetch_teams', async (req, res) => {
-	console.log('Fetch all teams request:' + req); 
-	const teams = await newTeamController.fetchTeamsData(); 
+	console.log('Fetch all teams request'); 
+	const teams = await newTeamController.fetchTeamsData();  
 	res.send({ teams });
 });
 
