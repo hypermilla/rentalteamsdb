@@ -141,9 +141,9 @@ const NewTeamForm = () => {
 
 	return (
 		<div className="new-team-form">
-			<h1>Import your Rental Team Screenshot</h1>
+			<h1>Add your own team</h1>
 			<p>Share your Rental Team image from your Nintendo Switch and upload the PNG file here. 
-				<br />We will read the file and add your team to the database!
+				<br />Rotom will read the image file, recognize the pokémon data and add your team to the database!
 			</p>
 
 			{ message ? <Message msg={message} /> : null }
@@ -155,7 +155,7 @@ const NewTeamForm = () => {
 					{filename}
 				</label>
 			</div>
-			<input type="submit" value="upload" className="btn btn-primary btn-block mt-4" />
+			<input type="submit" value="Upload Screenshot" className="btn btn-primary btn-block mt-4" />
 			</form>
 
 			{ isUploading ? <ProgressBar percentage={uploadPercentage} /> : null }

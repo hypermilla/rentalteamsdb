@@ -43,7 +43,7 @@ const LandingPage = () => {
 
     return (
         <div className="landing">
-			<h3>Pokémon Sword & Shield Rental Teams Repository</h3>
+			<h1>Pokémon Sword & Shield Rental Teams Repository</h1>
 			<p>Search for competitive Pokémon teams to try out, or add your own.</p>
 
 			<SearchBar 

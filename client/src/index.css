@@ -110,8 +110,12 @@ code {
 	text-align: center;
 }
 
-.landing h3 {
+.content h1, h2, h3, h4, h5 {
 	font-weight: bolder;
+}
+
+.content p {
+	font-size: 1.3em;
 }
 
 .search-bar {
@@ -210,9 +214,17 @@ code {
   }
   
   
-
+.new-team-form {
+	text-align: center;
+}
 .new-team-form form {
-	padding-bottom: 40px;
+	padding: 2em 0 2em 0;
+}
+
+.new-team-form .btn.btn-primary {
+	text-align: center;
+	font-size: 1.4em;
+	font-weight: bold;
 }
 
 .team-info .card-body p {
