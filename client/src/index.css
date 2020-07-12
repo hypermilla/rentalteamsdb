@@ -86,6 +86,8 @@ code {
 
 .header .btn {
 	float: right;
+	background-color: #ee738a;
+	border-color: #ee738a;
 	margin: 1em;
 	display: flex;
 	order: 1;

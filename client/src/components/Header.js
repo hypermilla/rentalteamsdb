@@ -9,7 +9,9 @@ const Header = () => {
 					Add New Rental Team
 			</Link>
 			<div className="logo">
-				<Link to="/"><img align="center" src={require("../img/logo.png")} /></Link>
+				<Link to="/">
+					<img align="center" src={require("../img/logo.png")}  nopin="nopin" />
+				</Link>
 			</div>
 			<h1><spam className="rotom">Rotom</spam><spam className="box">Box</spam></h1>
         </div>
