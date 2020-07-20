@@ -1,18 +1,24 @@
-const express = require("express"); 
+//General dependencies
 const path = require('path');
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-
 const keys = require("./config/keys");
+
+//MongoDB
+const mongoose = require("mongoose");
+mongoose.connect(keys.mongoURI, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+});
+require("./models/Teams");
+
+//Express
+const express = require('express'); 
 const router = require("./routes.js");
-
-require("./models/Team"); 
-
-mongoose.connect(keys.mongoURI);
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.urlencoded());
+app.use(express.json());
 app.use('/', router);
 
 

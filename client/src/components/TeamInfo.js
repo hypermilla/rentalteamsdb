@@ -1,32 +1,40 @@
 import React from 'react';
 import PokemonInfo from './PokemonInfo';
-
-import teamData from '../data/teams.json';
+//import teamData from '../data/teams.json';
 
 
 const TeamInfo = (props) => {
 	if (!props.teamData) {
 		return null;
 	}
-
-	//const data = JSON.parse(teamData);
 	//const team = teamData[0];
-	const team = props.teamData;
+	let team = props.teamData;
 
-	console.log(team);
-	const pokemon = team.pokemon.map((poke) => 
+	function updatePkmnData(form, isShiny, index) {
+		team.pokemon[index].form = form;
+		team.pokemon[index].isShiny = isShiny;
+		console.log('Updated Pkmn Data!', team.pokemon[index]);
+		props.onUpdateTeamData(team);
+	}
+
+	const pokemon = team.pokemon.map((poke, index) => 
 		<PokemonInfo
-				name={poke.name} 
-				type1={poke.type1}
-				type2={poke.type2}
-				item={poke.item}
-				ability={poke.ability}
-				moveset={poke.moveset}
+			key={index}
+			name={poke.name} 
+			type1={poke.type1}
+			type2={poke.type2}
+			item={poke.item}
+			ability={poke.ability}
+			moveset={poke.moveset}
+			isShiny={poke.isShiny}
+			form={poke.form}
+			isNewTeam={props.isNewTeam}
+			updatePkmnData={(form, isShiny) => updatePkmnData(form, isShiny, index)}
 		/>
 	);
 
 	return (
-		<div class="team-info card">
+		<div className="team-info card">
 				<div className="card-header">
 					Your Team Info: 
 				</div>

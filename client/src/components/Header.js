@@ -13,7 +13,7 @@ const Header = () => {
 					<img align="center" src={require("../img/logo.png")}  nopin="nopin" />
 				</Link>
 			</div>
-			<h1><spam className="rotom">Rotom</spam><spam className="box">Box</spam></h1>
+			<h1><span className="rotom">Rotom</span><span className="box">Box</span></h1>
         </div>
     );
 }

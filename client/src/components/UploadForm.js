@@ -1,33 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Message from './Message'; 
+import ProgressBar from './ProgressBar';
 import axios from 'axios';
 
-import Message from './Message';
-import ProgressBar from './ProgressBar';
-
-import NewTeamInfoLoading from './NewTeamInfoLoading';
-import NewTeamInfo from './NewTeamInfo'; 
-
-const NewTeamForm = () => {
-
+const UploadForm = (props) => {
 	const [file, setFile] = useState('');
 	const [filename, setFilename] = useState('');
-	const [newTeamId, setNewTeamId] = useState(''); 
-	const [newTeamData, setNewTeamData] = useState('');
 	const [message, setMessage] = useState('');
 	const [uploadPercentage, setUploadPercentage] = useState(0);
-	const [isUploading, setIsUploading] = useState(false);
-	const [isWaitingForTeamData, setWaitingForTeamData] = useState(false);
 	const [isInvalidImage, setIsInvalidImage] = useState(true);
-	const [jobStatus, setJobStatus] = useState('Analysing image...');
-	const [statusUpdateCount, setStatusUpdateCount] = useState(0);
-
-	const reader = new FileReader(); 
+	const [isUploading, setIsUploading] = useState(false);
 
 	const onChange = e => {
-
 		setFile(e.target.files[0]);
 		setFilename(e.target.files[0].name);
-
+		const reader = new FileReader(); 
+		
 		if (!e.target.files[0] && !e.target.files) {
 			setMessage('No file selected');
 			setIsInvalidImage(false);
@@ -90,18 +78,12 @@ const NewTeamForm = () => {
 					setUploadPercentage(parseInt(Math.round(
 						(progressEvent.loaded * 100) / progressEvent.total))
 					);
-					//setTimeout(() => setUploadPercentage(0), 55000);
 				}
 			});
 
-			setNewTeamId(res.data.newTeamId);
-			//setNewTeamData(res.data.newTeamData);
 			setMessage("Image uploaded. Generating team data...");
 			setIsUploading(false);
-			setWaitingForTeamData(true);
-			setStatusUpdateCount(1);
-			setJobStatus("Generating Team Data from image...");
-			//console.log(res.data);
+			props.onUploadComplete(res.data.newTeamId);
 		} 
 		catch (err) {
 			setMessage('There was a problem with the server');
@@ -109,44 +91,16 @@ const NewTeamForm = () => {
 		}
 	}
 
-	useEffect(() => {
-		const getNewTeamData = async (newTeamId) => {
-			const url = '/api/team_job_status/' + newTeamId;
-			console.log("Fetching Job Status!", statusUpdateCount, url);
-			let status = await axios.get(url); 
-			console.log(status);
-			return status;
-		};
-
-		if (isWaitingForTeamData) {
-			setTimeout(async () => {
-				const status = await getNewTeamData(newTeamId);
-				console.log("Data:", status.data);	
-				console.log("Logs: ", status.data.logs);
-				if (status.data.state == "completed") {
-					//fetch completed job data 		
-					setWaitingForTeamData(false);
-					setNewTeamData(status.data.result);
-					setJobStatus("Team Data Generated!");
-					setMessage("Team data generated! Please check your new team.");
-				}
-				else {
-					setStatusUpdateCount(statusUpdateCount + 1);
-					setWaitingForTeamData(true);	
-					setJobStatus(status.data.logs.logs[status.data.logs.count - 1]);
-				}
-			}, 1000);
-		}
-	}, [statusUpdateCount]);
-
 	return (
-		<div className="new-team-form">
+		<div className='new-team-form'>
 			<h1>Add your own team</h1>
 			<p>Share your Rental Team image from your Nintendo Switch and upload the PNG file here. 
 				<br />Rotom will read the image file, recognize the pokémon data and add your team to the database!
 			</p>
 
-			{ message ? <Message msg={message} /> : null }
+			{ message ? 
+				<Message msg={message} /> 
+			: null }
 
 			<form onSubmit={onSubmit}>
 			<div className="custom-file">
@@ -159,17 +113,13 @@ const NewTeamForm = () => {
 			</form>
 
 			{ isUploading ? <ProgressBar percentage={uploadPercentage} /> : null }
- 
-			<NewTeamInfo 
-				newTeamId={newTeamId} 
-				isWaitingForTeamData={isWaitingForTeamData}
-				newTeamData={newTeamData} 
-				status={jobStatus}
-			/> 
-
 		</div>
 	);
 }
 
-export default NewTeamForm;
+export default UploadForm; 
+
+
+
+
 

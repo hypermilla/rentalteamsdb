@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
+import PokemonFormSelector from './PokemonFormSelector'; 
+import PokemonShinySelector from './PokemonShinySelector'; 
+import pkmnData from '../data/pokemon.json';
 
 const PokemonInfo = (props) => {
+	const [form, setForm] = useState('');
+	const [sprite, setSprite] = useState('');
+	const [isShiny, setIsShiny] = useState(false); 
 
-	const pokemonName = props.name.toLowerCase();
-	let pkmnSprite = `https://raphgg.github.io/den-bot/data/sprites/pokemon/normal/${pokemonName}.gif`;
+	const pkmnName = props.name.toLowerCase();
+	const pkmnAvailableForms = getPkmnForms(pkmnName);
+	if (props.form)
+		setForm(props.form); 
+	if (props.isShiny)
+		setIsShiny(props.isShiny);
 
-	const moveset = props.moveset.map((move, i) =>
-		<li key={i}>
-			Move {i+1}: {move}
-		</li>
-	);
+	useEffect(() => {
+		setSprite(getSpriteFileName(pkmnName, form));
+	}, [form, isShiny]);
 
 	function getPokemonTypeClass(pokemonType) {
 		if (pokemonType == undefined) {
@@ -19,12 +27,93 @@ const PokemonInfo = (props) => {
 		return pokemonTypeClass;
 	}
 
+	function getPkmnForms(pkmnName) {
+		//const data = JSON.parse(pkmnData);
+		for (const pkmn of pkmnData) {
+			const currentPkmnName = new RegExp(pkmn.name, "i");
+			const selectedPkmn = currentPkmnName.test(pkmnName); 
+			if (selectedPkmn && pkmn.forms.length > 0) {
+				if (pkmn.forms[0] != 'None')
+					pkmn.forms.splice(0, 0, 'None');
+				return pkmn.forms; 
+			}
+		}
+		return null; 
+	}
+
+	function getSpriteFileName(pkmn, form) {
+		let pkmnColor = 'normal'; 
+		if (isShiny)
+			pkmnColor = 'shiny'; 
+
+		const baseURL = 'https://raphgg.github.io/den-bot/data/sprites/pokemon/' + pkmnColor + '/';
+		const extension = '.gif'; 
+
+		switch (pkmn) {
+			case 'mr. mime':
+			case 'mime jr.':
+			case 'mr. rime': 
+				pkmn = pkmn.replace('.', '').split(' ').join('-');
+				break;
+			default: 
+				pkmn = pkmn.replace('-', '');
+		}
+		
+		form = form.toLowerCase();
+		switch (form) {
+			case "alolan": 
+			case "crowned": 
+			case "dusk": 
+			case "midnight": 
+			case "galarian": 
+			case "mega": 
+			case "megay":
+			case "megax": 
+			case "primal":
+			case "ultra":
+				return baseURL + form + '-' + pkmn + extension;
+			case "":
+				return baseURL + pkmn + extension;
+			case "dusk-form":
+				return baseURL + "dusk-" + pkmn + extension;
+			case "galarian-zen":
+				return baseURL + "galarian-" + pkmn + "-zen" + extension; 
+			case 'none':
+				return baseURL + pkmn + extension; 
+			default:
+				// ignore
+		}
+		console.log(baseURL + pkmn + '-' + form + extension); 
+		return baseURL + pkmn + '-' + form + extension; 
+	}
+
+	function updatePkmnForm(form) {
+		console.log('Updating pokemon form to', form);
+		setForm(form); 
+		setSprite(getSpriteFileName(pkmnName, form));
+		props.updatePkmnData(form, isShiny); 
+	}
+
+	function updateShiny(checked) {
+		console.log('Shiny updated to', checked); 
+		if(checked) {
+			setIsShiny(true);
+		} else setIsShiny(false); 
+		props.updatePkmnData(form, isShiny);
+	}
+
+	const moveset = props.moveset.map((move, i) =>
+		<li key={i}>
+			Move {i+1}: {move}
+		</li>
+	);
+
 	return (
 		<div className="pokemon-info card bg-dark shadow">
 			<div className="card-img-top">
-				<img className="pokemon-sprite" src={pkmnSprite} />
+				<img className="pokemon-sprite" src={sprite} />
 			</div>
-			<div class="card-body">
+			<div className="card-body">
 				<h5 className="pokemon-name card-title">{props.name}</h5>
 				<div className="pokemon-type">
 					<span className={getPokemonTypeClass(props.type1)}>
@@ -34,7 +123,22 @@ const PokemonInfo = (props) => {
 						{props.type2}
 					</span>
 				</div>
-				<ul class="list-group list-group-flush bg-dark">
+				<ul className="list-group list-group-flush bg-dark">
+					{ props.isNewTeam ? 
+						<li className="pokemon-options list-group-item bg-dark">
+							<PokemonShinySelector 
+								onChange={(checked) => updateShiny(checked)} 
+								checked={isShiny} 
+							/>
+							{ pkmnAvailableForms ? 
+								<PokemonFormSelector 
+									pkmnForms={pkmnAvailableForms} 
+									onChange={(form) => updatePkmnForm(form)}
+									selectedForm={form}
+								/>
+							: null }
+						</li> 
+					: null }
 					<li className="pokemon-item list-group-item bg-dark">
 						Item: {props.item}
 					</li>

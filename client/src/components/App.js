@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Header from './Header';
 import LandingPage from './LandingPage';
-import NewTeamForm from './NewTeamForm';
+import TeamCreationPage from './TeamCreationPage';
 import TeamInfo from './TeamInfo';
 
 
@@ -17,7 +17,7 @@ class App extends Component
 				<div className="container bg-darker">
 					<Switch>
 						<Route exact path="/" component={LandingPage} />
-						<Route path="/newteam" component={NewTeamForm} />
+						<Route path="/newteam" component={TeamCreationPage} />
 						<Route path="/team/:id" component={TeamInfo} />	
 					</Switch>
 				</div>

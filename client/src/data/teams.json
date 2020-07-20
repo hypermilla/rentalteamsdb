@@ -5,7 +5,7 @@
 		"rentalCode": "00 000005 XL W7 JX",
 		"pokemon": [
 			{
-				"name": "Runerigus",
+				"name": "Charizard",
 				"level": "100",
 				"ability": "Wandering Spirit",
 				"item": "Leftovers",
@@ -19,7 +19,7 @@
 				]
 			},
 			{
-				"name": "Sylveon",
+				"name": "Meowth",
 				"level": "50",
 				"ability": "Pixilate",
 				"item": "Throat Spray",
@@ -32,7 +32,7 @@
 				]
 			},
 			{
-				"name": "Araquanid",
+				"name": "Kommo-o",
 				"level": "100",
 				"ability": "Water Bubble",
 				"item": "Weakness Policy",
@@ -46,7 +46,7 @@
 				]
 			},
 			{
-				"name": "Conkeldurr",
+				"name": "Mr. Mime",
 				"level": "100",
 				"ability": "Guts",
 				"item": "Assault Vest",
@@ -59,7 +59,7 @@
 				]
 			},
 			{
-				"name": "Reuniclus",
+				"name": "Mr. Rime",
 				"level": "51",
 				"ability": "Magic Guard",
 				"item": "Life Orb",
@@ -72,7 +72,7 @@
 				]
 			},
 			{
-				"name": "Salazzle",
+				"name": "Mime Jr.",
 				"level": "100",
 				"ability": "Corrosion",
 				"item": "Focus Sash",

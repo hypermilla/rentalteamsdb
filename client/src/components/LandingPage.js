@@ -17,6 +17,7 @@ const LandingPage = () => {
 		const fetchTeams = async () => {
 			let result = await axios.get('/api/fetch_teams'); 
 			setData(result.data.teams);
+			console.log('Teams Data Fetched!', 'Teams fetched:', result.data.teams.length);
 		};
 
 		fetchTeams();

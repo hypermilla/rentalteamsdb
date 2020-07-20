@@ -260,18 +260,24 @@ code {
 	background-size: cover;
 	background-position: center;
 	text-align: center;
-	padding: 2rem;
-	height: 10rem;
+	height: 12rem;
+	padding: 2em;
 	border-color: none;
+	display: flex;
 }
 
 .card-img-top img {
 	margin: 0 auto;
 	text-align: left;
+	flex-shrink: 0;
 }
 
 .card-title {
 	margin-bottom: 0.25rem;
+}
+
+.pokemon-name, .pokemon-type {
+	text-align: center;
 }
 
 .pokemon-info .card-body {
@@ -289,6 +295,11 @@ code {
 
 .pokemon-info.card span, ul, li {
 	text-align: left;
+}
+
+.pokemon-options {
+	text-align: center;
+
 }
 
 .pokemon-moveset ul {

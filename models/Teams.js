@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema; 
-//const { Schema } = mongoose; 
+// const { Schema } = mongoose; 
 
 const teamSchema = new Schema({
     "teamId": String,
@@ -24,4 +24,4 @@ const teamSchema = new Schema({
     ]
 });
 
-mongoose.model ('teams', teamSchema);
+mongoose.model('teams', teamSchema);
