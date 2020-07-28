@@ -4,20 +4,16 @@ import PokemonShinySelector from './PokemonShinySelector';
 import pkmnData from '../data/pokemon.json';
 
 const PokemonInfo = (props) => {
-	const [form, setForm] = useState('');
-	const [sprite, setSprite] = useState('');
-	const [isShiny, setIsShiny] = useState(false); 
+	const [form, setForm] = useState(props.form);
+	const [isShiny, setIsShiny] = useState(props.isShiny); 
+	const [sprite, setSprite] = useState(getSpriteFileName(props.name.toLowerCase(), props.form));
 
 	const pkmnName = props.name.toLowerCase();
 	const pkmnAvailableForms = getPkmnForms(pkmnName);
-	if (props.form)
-		setForm(props.form); 
-	if (props.isShiny)
-		setIsShiny(props.isShiny);
 
 	useEffect(() => {
-		setSprite(getSpriteFileName(pkmnName, form));
-	}, [form, isShiny]);
+		setSprite(getSpriteFileName(props.name.toLowerCase(), props.form));
+	});
 
 	function getPokemonTypeClass(pokemonType) {
 		if (pokemonType == undefined) {
@@ -28,7 +24,6 @@ const PokemonInfo = (props) => {
 	}
 
 	function getPkmnForms(pkmnName) {
-		//const data = JSON.parse(pkmnData);
 		for (const pkmn of pkmnData) {
 			const currentPkmnName = new RegExp(pkmn.name, "i");
 			const selectedPkmn = currentPkmnName.test(pkmnName); 
@@ -58,7 +53,7 @@ const PokemonInfo = (props) => {
 			default: 
 				pkmn = pkmn.replace('-', '');
 		}
-		
+
 		form = form.toLowerCase();
 		switch (form) {
 			case "alolan": 
@@ -81,25 +76,20 @@ const PokemonInfo = (props) => {
 			case 'none':
 				return baseURL + pkmn + extension; 
 			default:
-				// ignore
+				//ignore
 		}
-		console.log(baseURL + pkmn + '-' + form + extension); 
 		return baseURL + pkmn + '-' + form + extension; 
 	}
 
 	function updatePkmnForm(form) {
-		console.log('Updating pokemon form to', form);
 		setForm(form); 
-		setSprite(getSpriteFileName(pkmnName, form));
 		props.updatePkmnData(form, isShiny); 
 	}
 
 	function updateShiny(checked) {
-		console.log('Shiny updated to', checked); 
-		if(checked) {
-			setIsShiny(true);
-		} else setIsShiny(false); 
-		props.updatePkmnData(form, isShiny);
+		console.log('is shiny:', checked);
+		setIsShiny(checked);
+		props.updatePkmnData(form, checked);
 	}
 
 	const moveset = props.moveset.map((move, i) =>

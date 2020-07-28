@@ -22,8 +22,6 @@ router.post('/api/update_team', DataController.updateRentalTeamData);
 router.post ('/api/upload', UploadController.single('rentalTeamScreenshot'), QueueController.createNewTeamJob);
 router.get('/api/team_job_status/:jobId', QueueController.getJobStatus);
 
-
-
 // For everything else 
 router.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));

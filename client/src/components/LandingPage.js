@@ -23,8 +23,6 @@ const LandingPage = () => {
 		fetchTeams();
 	}, [setData]);
 
-
-
 	const delayedSearch = _.debounce(term => {
 		const searchResults = search(data, term);  
 		setResults(searchResults);
@@ -40,7 +38,6 @@ const LandingPage = () => {
 		setTeamData(selectedTeamData); 
 		console.log("Updated Selected Team Data", selectedTeamData);
 	}
-
 
     return (
         <div className="landing">

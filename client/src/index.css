@@ -44,7 +44,7 @@ code {
 }
 
 .content {
-  padding: 0 4em 0 4em;
+  padding: 0 4em 4em 4em;
   max-width: 1100px;
   text-align: left;
   margin: 0 auto;
@@ -83,7 +83,6 @@ code {
 	align-items: center;
 }
 
-
 .header .btn {
 	float: right;
 	background-color: #ee738a;
@@ -93,19 +92,24 @@ code {
 	order: 1;
 }
 
-.btn.btn-primary {
+.btn.btn-primary, .btn.btn-primary:visited {
 	background-color: #ee738a;
 	border-color: #ee738a;
 	text-align: right;
 	height: 2.5em;
 }
+.btn.btn-primary:hover, .btn.btn-primary:checked, .btn.btn-primary:focus{
+	background-color: #c56375!important;
+	border-color: #c56375!important;
+}
 
-.btn.btn-primary:hover {
+
+.btn.btn-primary:hover:visited:checked:focus{
 	background-color: #f08fa1;
 }
 
-.new-team-btn {
-
+.bg-primary, .btn-primary {
+	background-color: #f08fa1;
 }
 
 .landing {
@@ -118,6 +122,15 @@ code {
 
 .content p {
 	font-size: 1.3em;
+}
+
+.message {
+	margin: 1em 0 1em 0;
+}
+
+.loading-status.btn.btn-primary {
+	text-align: center;
+	cursor: none;
 }
 
 .search-bar {
@@ -229,6 +242,19 @@ code {
 	font-weight: bold;
 }
 
+.save-team.card { 
+	text-align: center;
+	padding: 2em;
+}
+
+.save-team.card p {
+	font-size: 1.1em;
+}
+
+.save-team.card button {
+	padding: 0 3em 0 3em;
+}
+
 .team-info .card-body p {
 
 }
@@ -238,10 +264,9 @@ code {
 }
 
 .team-info.card {
-	max-width: 85%;
-	margin: 0 auto;
 	display: block;
 	background-color: #444a52;
+	margin-top: 2em;
 }
 
 .team-pokemon {

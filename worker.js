@@ -33,20 +33,20 @@ async function start()
 			
 			job.log("Setting up...");
 			const folder = await team.createTeamFolder();
-			let data = {};
-			data.teamId = team.teamId; 
+			let teamData = {};
+			teamData.teamId = team.teamId; 
 
 			job.log("Extracting image slices from screenshot...");
 			await team.extractImages(job.data.file, folder);
 
 			job.log("Reading IGN from image...");
-			data.ign = await team.getIgnData();
+			teamData.ign = await team.getIgnData();
 
 			job.log("Reading Rental Code from image...");
-			data.rentalCode = await team.getRentalCodeData(); 
+			teamData.rentalCode = await team.getRentalCodeData(); 
 
 			job.log("Reading Team Info from image...");
-			data.pokemon = []; 
+			teamData.pokemon = []; 
 
 			for (let n = 1; n <= 6; n++) {
 				const pkmnNumber = n.toString().padStart(2, '0');
@@ -65,22 +65,23 @@ async function start()
 				pkmn.level = level;
 				pkmn.ability = ability;
 				pkmn.moveset = moveset;
+				pkmn.isShiny = false; 
+				pkmn.form = ''; 
 
-				data.pokemon.push(pkmn); 
+				teamData.pokemon.push(pkmn); 
 			}
-			console.log('Data:', data); 
+			console.log('Data:', teamData); 
 		
 			job.log("Rental Team Data acquired! Finalizing process...");
 			await team.deleteTeamFolder(); 
 			
-			savedStatus = await team.saveRentalTeamData(data); 
-			console.log(savedStatus);
-			data.savedStatus = savedStatus; 
-            return data; 
+			const savedStatus = await team.saveRentalTeamData(teamData); 
+            return { teamData, savedStatus }; 
         });
 	}
 	catch (err) {
-    	console.log(err)
+		console.log(err)
+		return err; 
     }
 
 }

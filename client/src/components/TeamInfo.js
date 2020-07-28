@@ -1,12 +1,13 @@
 import React from 'react';
 import PokemonInfo from './PokemonInfo';
+import PropTypes from 'prop-types';
+
 //import teamData from '../data/teams.json';
 
-
 const TeamInfo = (props) => {
-	if (!props.teamData) {
-		return null;
-	}
+	// if (!props.teamData) {
+	// 	return null;
+	// }
 	//const team = teamData[0];
 	let team = props.teamData;
 
@@ -47,6 +48,10 @@ const TeamInfo = (props) => {
 				</div>
 		</div>
 	);
+}
+
+TeamInfo.propTypes = {
+	teamData: PropTypes.string.isRequired
 }
 
 export default TeamInfo;

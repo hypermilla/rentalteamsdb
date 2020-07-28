@@ -10,7 +10,9 @@ const teamSchema = new Schema({
         {
             "name": String,
             "level": String,
-            "ability": String,
+			"ability": String,
+			"isShiny": Boolean,
+			"form": String,
             "item": String,
             "type1": String,
             "type2": String,

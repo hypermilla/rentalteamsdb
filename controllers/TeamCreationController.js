@@ -234,7 +234,7 @@ class TeamCreationController {
 	async getIgnData() {
 		try {
 			const results = await this.client.textDetection(this.teamFolder + "/ign.jpg");
-			if (results == null) {
+			if (results[0].textAnnotations == undefined) {
 				//TODO: Return an error to end the job and pass to the client
 				throw "Could not read Rental Team data from this image.";
 			}
@@ -250,7 +250,9 @@ class TeamCreationController {
 	async getRentalCodeData() {
 		try {
 			const results = await this.client.textDetection(this.teamFolder + "/rentalcode.jpg");
-			if (results == null) {
+			console.log(results[0].textAnnotations[0]);
+			if (results[0].textAnnotations[0] == undefined) {
+				console.log("Could not read Rental Team data from this image.");
 				throw "Could not read Rental Team data from this image.";
 			}
 
@@ -259,11 +261,12 @@ class TeamCreationController {
 				.replace(/\s/g, '');
 		} 
 		catch (err) {
+			console.log(err);
 			throw err; 
 		}
 	}
 
-	async getPokemonTypeData (pkmnNumber) {
+	async getPokemonTypeData(pkmnNumber) {
 		try {
 			const pkmnImagePath = this.teamFolder + '/pokemon_' + pkmnNumber + '_type.jpg'; 
 			const results = await this.client.textDetection(pkmnImagePath);

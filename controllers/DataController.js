@@ -41,16 +41,23 @@ class DataController {
 	}
 
 	static async updateRentalTeamData(req, res) {
-		try {
-			console.log(req.body); 
-			const team = await Team.findOne({ teamId: req.body.teamId });
-			console.log('Team found by Mongoose:', team); 
-			team.overwrite(req.body.teamData); 
-			await team.save(); 
+		try { 
+			// const team = await Team.findOne({ teamId: req.body.teamId });
+			// console.log('Team found by Mongoose:', team.teamId, team.ign); 
+			// team.overwrite(req.body.teamData); 
+			// const savedTeam = await team.save(); 
+			
+			let updatedTeam = await Team.findOneAndUpdate(
+				{ teamId: req.body.teamData.teamId },
+				{ pokemon: req.body.teamData.pokemon },
+				{ new: true }
+			);
+
+			console.log(updatedTeam);
 
 			res.send({
 				msg: 'Rental Team updated successfully!',
-				team: team 
+				team: updatedTeam 
 			})
 			
 		} catch (error) {

@@ -41,7 +41,7 @@ createNewTeamJob = async (req, res, next) => {
 			imagePath: req.file.location
 		});
 	} 
-	catch (error) {
+	catch(error) {
 		console.log(error);
 	}
 }

@@ -6,6 +6,7 @@ const JobStatusChecker = (props) => {
 	const [statusUpdateCount, setStatusUpdateCount] = useState(0);
 
 	useEffect(() => {
+		console.log('Rendering Job Status');
 		const getNewTeamData = async (jobId) => {
 			let status = await axios.get(`/api/team_job_status/${jobId}`); 
 			return status;
@@ -19,26 +20,22 @@ const JobStatusChecker = (props) => {
 		setTimeout(async () => {
 			const status = await getNewTeamData(props.jobId);
 			if (status.data.state == "completed") {	
-				sendNewTeamData(status.data.result);
-
-				if (status.data.result.savedStatus) {
-					console.log('Rental Team created! Please check your new team.');
-				} else {
-					console.log("Rental Team already exists in the database.");	
-				}				
+				if (status.data.result.teamData != undefined)
+					sendNewTeamData(status.data.result);
+				else setJobStatus(status.data.result)				
 			}
 			else {
 				setStatusUpdateCount(statusUpdateCount + 1);	
 				setJobStatus(status.data.logs.logs[status.data.logs.count - 1]);
 			}
-		}, 1000);
+		}, 4000);
 	}, [statusUpdateCount]);
 
 	return (
-		<button className="btn btn-primary mt-5 mx-auto" type="button" disabled>
+		<div className="loading-status btn btn-primary btn-block mt-5 mx-auto" disabled>
 			<span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
-			{jobStatus}
-		</button>
+				{jobStatus}
+		</div>
 	);
 }
 
