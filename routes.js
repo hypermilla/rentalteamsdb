@@ -4,7 +4,7 @@ const {
 	TeamCreationController, 
 	DataController, 
 	UploadController 
-} = require('./controllers');
+} = require('./controllers/index');
 
 const express = require('express');
 const router = express.Router(); 
