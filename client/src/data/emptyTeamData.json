@@ -1,0 +1,103 @@
+{
+	"id": "",
+	"ign": "",
+	"rentalCode": "",
+	"pokemon": [
+		{
+			"name": "Pokémon",
+			"level": "100",
+			"ability": "",
+			"item": "",
+			"type1": "",
+			"type2": "",
+			"isShiny": false,
+			"form": "",
+			"moveset": [
+				"",
+				"",
+				"",
+				""
+			]
+		},
+		{
+			"name": "",
+			"level": "100",
+			"ability": "",
+			"item": "",
+			"type1": "",
+			"type2": "",
+			"isShiny": false,
+			"form": "",
+			"moveset": [
+				"",
+				"",
+				"",
+				""
+			]
+		},
+		{
+			"name": "",
+			"level": "100",
+			"ability": "",
+			"item": "",
+			"type1": "",
+			"type2": "",
+			"isShiny": false,
+			"form": "",
+			"moveset": [
+				"",
+				"",
+				"",
+				""
+			]
+		},
+		{
+			"name": "",
+			"level": "100",
+			"ability": "",
+			"item": "",
+			"type1": "",
+			"type2": "",
+			"isShiny": false,
+			"form": "",
+			"moveset": [
+				"",
+				"",
+				"",
+				""
+			]
+		},
+		{
+			"name": "",
+			"level": "100",
+			"ability": "",
+			"item": "",
+			"type1": "",
+			"type2": "",
+			"isShiny": false,
+			"form": "",
+			"moveset": [
+				"",
+				"",
+				"",
+				""
+			]
+		},
+		{
+			"name": "",
+			"level": "100",
+			"ability": "",
+			"item": "",
+			"type1": "",
+			"type2": "",
+			"isShiny": false,
+			"form": "",
+			"moveset": [
+				"",
+				"",
+				"",
+				""
+			]
+		}
+	]
+}

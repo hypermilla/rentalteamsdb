@@ -18,7 +18,7 @@ class App extends Component
 					<Switch>
 						<Route exact path="/" component={LandingPage} />
 						<Route path="/newteam" component={TeamCreationPage} />
-						<Route path="/team/:id" component={TeamInfo} />	
+						<Route path="/:rentalCode" component={TeamInfo} />	
 					</Switch>
 				</div>
 			</div>

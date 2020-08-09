@@ -13,7 +13,8 @@ const path = require('path');
 // Fetching Data from MongoDB 
 router.get('/api/fetch_teams', DataController.fetchTeams);
 router.get('/api/fetch_team/:ign', DataController.fetchTeamByIgn);
-router.get('/api/fetch_team_by_id/:id', DataController.fetchTeamById);
+router.get('/api/fetch_team_by_id/:teamId', DataController.fetchTeamById);
+router.get('/api/fetch_team_by_rental_code/:rentalCode', DataController.fetchTeamByRentalCode);
 
 // Updating Data in MongoDB
 router.post('/api/update_team', DataController.updateRentalTeamData);

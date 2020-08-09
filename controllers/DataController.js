@@ -31,10 +31,31 @@ class DataController {
 		try {
 			const mongoose = require('mongoose'); 
 			const Team = mongoose.model('teams'); 
-		
-			const team = await Team.findOne({ id: id });
+			const team = await Team.findOne({ teamId: req.params.teamId });
+
+			if (team) {
+				console.log("Team found:", team);
+				return res.send({ team: team });
+			}
+			else return res.send({ msg: "No teams found." })
 			
-			return res.send({ team });
+		} catch (error) {
+			return res.status(500).send('Error fetching data');
+		}
+	}
+
+	static async fetchTeamByRentalCode(req, res) {
+		try {
+			const mongoose = require('mongoose'); 
+			const Team = mongoose.model('teams'); 
+			const team = await Team.findOne({ rentalCode: req.params.rentalCode });
+
+			if (team) {
+				console.log("Team found:", team);
+				return res.send({ team: team });
+			}
+			else return res.send({ msg: "No teams found." })
+			
 		} catch (error) {
 			return res.status(500).send('Error fetching data');
 		}
