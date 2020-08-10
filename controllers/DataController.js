@@ -28,9 +28,7 @@ class DataController {
 	}
 	
 	static async fetchTeamById(req, res) {
-		try {
-			const mongoose = require('mongoose'); 
-			const Team = mongoose.model('teams'); 
+		try { 
 			const team = await Team.findOne({ teamId: req.params.teamId });
 
 			if (team) {
@@ -44,12 +42,16 @@ class DataController {
 		}
 	}
 
-	static async fetchTeamByRentalCode(req, res) {
+	static async fetchTeamByCode(req, res) {
 		try {
-			const mongoose = require('mongoose'); 
-			const Team = mongoose.model('teams'); 
-			const team = await Team.findOne({ rentalCode: req.params.rentalCode });
-
+			// Adjust teamCode to actual length with padding
+			let teamCode = req.params.teamCode; 
+			if (teamCode.length < 14) {
+				teamCode = String(teamCode).padStart(14, '0');
+				console.log(teamCode); 
+			}
+			
+			const team = await Team.findOne({ rentalCode: teamCode });
 			if (team) {
 				console.log("Team found:", team);
 				return res.send({ team: team });

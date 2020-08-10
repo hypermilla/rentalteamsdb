@@ -7,10 +7,17 @@ const TeamInfoStatusChecker = (props) => {
 	useEffect(() => {
 		const fetchTeamDataFromId = async () => {
 			try {
-				console.log('FETCHING DATA FROM ID', props.rentalCode);
-				let teamDataFromId = await axios.get(`/api/fetch_team_by_rental_code/${props.rentalCode}`); 
-				sendNewTeamData(teamDataFromId.data.team); 
-				setTeamStatus('Team data retrieved!'); 
+				console.log('FETCHING DATA FROM ID', props.teamCode);
+				let teamDataFromId = await axios.get(`/api/fetch_team_by_code/${props.teamCode}`); 
+
+				if (teamDataFromId.data.msg != undefined) {
+					setTeamStatus(teamDataFromId.data.msg); 
+					document.getElementById("spinner").className = ""; 
+				} 
+				else {
+					sendNewTeamData(teamDataFromId.data.team); 
+					setTeamStatus('Team data retrieved!'); 
+				}
 			}
 			catch(error) {
 				return error; 
@@ -27,7 +34,7 @@ const TeamInfoStatusChecker = (props) => {
 
 	return (
 		<div className="loading-status btn btn-primary btn-block mt-5 mx-auto" disabled>
-			<span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
+			<span id="spinner" className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
 				{teamStatus}
 		</div>
 	);

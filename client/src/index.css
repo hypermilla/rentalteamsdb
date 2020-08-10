@@ -96,7 +96,6 @@ code {
 	background-color: #ee738a;
 	border-color: #ee738a;
 	text-align: right;
-	height: 2.5em;
 }
 .btn.btn-primary:hover, .btn.btn-primary:checked, .btn.btn-primary:focus{
 	background-color: #c56375!important;
@@ -311,6 +310,14 @@ code {
 
 .card-body p, .card-body h5, .card-body h4, .card-body div {
 	padding: 0 1.25rem 0 1.25rem;
+}
+
+.card-body div.input-group-append {
+	padding: 0;
+}
+
+.team-link {
+	max-width: 30em;
 }
 
 .team-ign, .team-code {

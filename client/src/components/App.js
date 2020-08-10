@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Header from './Header';
 import LandingPage from './LandingPage';
 import TeamCreationPage from './TeamCreationPage';
-import TeamInfo from './TeamInfo';
+import TeamPage from './TeamPage';
 
 
 class App extends Component  
@@ -18,7 +18,7 @@ class App extends Component
 					<Switch>
 						<Route exact path="/" component={LandingPage} />
 						<Route path="/newteam" component={TeamCreationPage} />
-						<Route path="/:rentalCode" component={TeamInfo} />	
+						<Route path="/:teamCode" component={TeamPage} />	
 					</Switch>
 				</div>
 			</div>
