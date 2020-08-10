@@ -12,7 +12,7 @@ const PokemonInfo = (props) => {
 	const pkmnAvailableForms = getPkmnForms(pkmnName);
 
 	useEffect(() => {
-		setSprite(getSpriteFileName(props.name.toLowerCase(), props.form));
+		setSprite(getSpriteFileName(props.name.toLowerCase(), form));
 	});
 
 	function getPokemonTypeClass(pokemonType) {
@@ -81,9 +81,9 @@ const PokemonInfo = (props) => {
 		return baseURL + pkmn + '-' + form + extension; 
 	}
 
-	function updatePkmnForm(form) {
-		setForm(form); 
-		props.updatePkmnData(form, isShiny); 
+	function updatePkmnForm(newForm) {
+		setForm(newForm); 
+		props.updatePkmnData(newForm, isShiny); 
 	}
 
 	function updateShiny(checked) {
