@@ -9,7 +9,7 @@ const JobStatusChecker = (props) => {
 	useEffect(() => {
 		console.log('Rendering Job Status');
 		const getNewTeamData = async (jobId) => {
-			let status = await axios.get(`/api/team_job_status/${jobId}`); 
+			let status = await axios.get(`${process.env.REACT_APP_SERVER_URL}/team_job_status/${jobId}`); 
 			return status;
 		};
 

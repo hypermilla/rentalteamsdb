@@ -8,7 +8,7 @@ const TeamInfoStatusChecker = (props) => {
 		const fetchTeamDataFromId = async () => {
 			try {
 				console.log('FETCHING DATA FROM ID', props.teamCode);
-				let teamDataFromId = await axios.get(`/api/fetch_team_by_code/${props.teamCode}`); 
+				let teamDataFromId = await axios.get(`${process.env.REACT_APP_SERVER_URL}/fetch_team_by_code/${props.teamCode}`); 
 
 				if (teamDataFromId.data.msg != undefined) {
 					setTeamStatus(teamDataFromId.data.msg); 

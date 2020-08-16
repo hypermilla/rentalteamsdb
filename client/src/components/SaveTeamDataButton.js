@@ -8,7 +8,7 @@ const SaveTeamDataButton = (props) => {
 
 	const saveTeamChanges = async () => {
 		try {
-			const res = await axios.post(`/api/update_team`, { teamData: props.teamData });
+			const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/update_team`, { teamData: props.teamData });
 			setMessage(res.data.msg);
 		} 
 		catch (err) {
