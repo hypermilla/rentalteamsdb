@@ -22,7 +22,8 @@ const Navbar = () => {
 						
 					</div>
 					<Link to="/newteam" type="button" className="new-team-btn btn btn-primary">
-						Add New Rental Team
+						<i className="fas fa-plus-circle"></i>
+						Add new team
 					</Link>
 				</div>
 			</nav>
