@@ -20,7 +20,7 @@ const TeamInfoStatusChecker = (props) => {
 				}
 			}
 			catch(error) {
-				return error; 
+				fetchTeamDataFromId();
 			}
 		};
 

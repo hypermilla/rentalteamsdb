@@ -25,7 +25,7 @@ const SaveTeamDataButton = (props) => {
 		description = `Unfortunately it's not possible to update the team data. This feature can be added later!`; 
 
 	return (
-		<div class="save-team card bg-dark">
+		<div class="save-team card">
 			<div class="card-body">
 				<h4 class="card-title"> {title} </h4>
 				<p class="card-text"> {description} </p>

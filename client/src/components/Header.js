@@ -4,16 +4,21 @@ import { Link } from 'react-router-dom';
 const Header = () => {
     
     return (
-        <div className="header bg-darker">
+        <div className="header">
 			<Link to="/newteam" type="button" className="new-team-btn btn btn-primary">
-					Add New Rental Team
+					<i class="fas fa-plus-circle"></i>
+					Add new team
 			</Link>
 			<div className="logo">
 				<Link to="/">
 					<img align="center" src={require("../img/logo.png")}  nopin="nopin" />
 				</Link>
 			</div>
-			<h1><span className="rotom">Rotom</span><span className="box">Box</span></h1>
+			<h1>
+				<Link to="/" className="landing-title">
+					<span className="rotom">Rotomi</span>.<span className="box">io</span>
+				</Link>
+			</h1>
         </div>
     );
 }

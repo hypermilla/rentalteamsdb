@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Header from './Header';
 import UploadForm from './UploadForm';
 import JobStatusChecker from './JobStatusChecker'; 
 import TeamInfo from './TeamInfo'; 
@@ -27,7 +28,8 @@ const TeamCreationPage = () => {
 	}
 
 	return (
-		<div className="new-team">
+		<div className="new-team container">
+			<Header />
 			{ newTeamData ? 
 				null :
 				<UploadForm onUploadComplete={(jobId) => onUploadComplete(jobId)} />

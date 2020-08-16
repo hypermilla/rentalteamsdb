@@ -32,7 +32,7 @@ const JobStatusChecker = (props) => {
 	}, [statusUpdateCount]);
 
 	return (
-		<div className="loading-status btn btn-primary btn-block mt-5 mx-auto" disabled>
+		<div className="loading-status btn btn-primary btn-block mx-auto" disabled>
 			<span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" />
 				{jobStatus}
 		</div>

@@ -94,12 +94,12 @@ const PokemonInfo = (props) => {
 
 	const moveset = props.moveset.map((move, i) =>
 		<li key={i}>
-			Move {i+1}: {move}
+			{move}
 		</li>
 	);
 
 	return (
-		<div className="pokemon-info card bg-dark shadow">
+		<div className="pokemon-info card shadow">
 			<div className="card-img-top">
 				<img className="pokemon-sprite" src={sprite} />
 			</div>
@@ -113,9 +113,9 @@ const PokemonInfo = (props) => {
 						{props.type2}
 					</span>
 				</div>
-				<ul className="list-group list-group-flush bg-dark">
+				<ul className="list-group list-group-flush">
 					{ props.isNewTeam ? 
-						<li className="pokemon-options list-group-item bg-dark">
+						<li className="pokemon-options list-group-item">
 							<PokemonShinySelector 
 								onChange={(checked) => updateShiny(checked)} 
 								checked={isShiny} 
@@ -129,13 +129,13 @@ const PokemonInfo = (props) => {
 							: null }
 						</li> 
 					: null }
-					<li className="pokemon-item list-group-item bg-dark">
+					<li className="pokemon-item list-group-item">
 						Item: {props.item}
 					</li>
-					<li className="pokemon-ability list-group-item bg-dark">
+					<li className="pokemon-ability list-group-item">
 						Ability: {props.ability}
 					</li>
-					<li className="pokemon-moveset list-group-item bg-dark">
+					<li className="pokemon-moveset list-group-item">
 					<ul>
 						{moveset}
 					</ul>

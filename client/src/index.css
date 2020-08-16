@@ -1,7 +1,7 @@
 html {
 	width: 100%;
 	height: 100%;
-	background-color: #23272a;
+	background-color: #f2f2f2;
 	padding: 0;
 	margin: 0;
 }
@@ -13,6 +13,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f2f2f2;
 }
 
 code {
@@ -21,7 +22,7 @@ code {
 }
 
 .bg-darker {
-	background-color: #23272a;
+	background-color: #f2f2f2;
 }
 
 .shadow {
@@ -37,6 +38,7 @@ code {
   display:block;
   text-align: left;
   margin: 0 auto;
+  background-color: #f2f2f2;
 }
 
 .App.container-fluid {
@@ -44,34 +46,66 @@ code {
 }
 
 .content {
-  padding: 0 4em 4em 4em;
-  max-width: 1100px;
   text-align: left;
   margin: 0 auto;
+  min-height: 80%;
 }
 
+.container {
+	padding: 2em;
+}
+
+/* Links */ 
+
+a.text-link {
+	color: #41c4b3;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+a.text-link :visited, a :active {
+	color: #41c4b3;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+a.text-link :hover {
+	text-decoration: underline;
+	color: #41c4b3;
+}
+
+
+/* Header */ 
+
 .header {
-	padding: 1em;
 }
 
 .header h1 { 
 	display: flex;
 	align-self: center;
 	justify-content: center;
-	font-size: 4rem;
+	font-size: 3em;
 	font-weight: bold;
 }
 
+.header a.landing-title {
+	text-decoration: none;
+	color: #666 !important;
+}
+.header a.landing-title :hover {
+	text-decoration: none;
+}
+
 .header img {
-	max-height: 20em;
+	max-height: 14em;
 	margin: 0 auto;
 }
 
-.header .rotom {
+.rotom {
 	color: #41c4b3;
 }
 
-.header .box {
+.box {
 	color: #ee738a;
 }
 
@@ -85,38 +119,76 @@ code {
 
 .header .btn {
 	float: right;
-	background-color: #ee738a;
-	border-color: #ee738a;
-	margin: 1em;
+	background-color: #41c4b3;
+	border-color: #41c4b3;
 	display: flex;
 	order: 1;
+	font-size: 1.1em;
+	border-radius: 1em;
+	padding: 0.6em 1.2em 0.6em 1.2em;
+	font-weight: bold;
 }
 
+.fa-plus-circle {
+	font-size: 1.4em;
+	padding-right: 0.4em;
+}
+
+/* Navbar */ 
+
+.navbar { 
+	background-color: #fff;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	margin-bottom: 2em;
+	box-shadow: 10px;
+}
+
+.navbar .navbar-brand.title {
+	font-weight: bolder;
+	font-size: 1.8em;
+}
+
+.navbar-brand img {
+	max-height: 2.4em;
+	padding: 0;
+	margin-top: -0.6em;
+}
+
+/* Buttons */ 
+
 .btn.btn-primary, .btn.btn-primary:visited {
-	background-color: #ee738a;
-	border-color: #ee738a;
+	background-color: #41c4b3;
+	border-color: #41c4b3;
 	text-align: right;
 }
 .btn.btn-primary:hover, .btn.btn-primary:checked, .btn.btn-primary:focus{
-	background-color: #c56375!important;
-	border-color: #c56375!important;
+	background-color: #41c4b3!important;
+	border-color: #41c4b3!important;
 }
 
 
 .btn.btn-primary:hover:visited:checked:focus{
-	background-color: #f08fa1;
+	background-color: #41c4b3;
 }
 
 .bg-primary, .btn-primary {
 	background-color: #f08fa1;
+	color: #fff;
 }
 
 .landing {
 	text-align: center;
 }
 
+h3 {
+	color: #2b2b2b;
+	font-weight: bolder !important;
+}
+
 .content h1, h2, h3, h4, h5 {
-	font-weight: bolder;
+	font-weight: bold;
 }
 
 .content p {
@@ -133,31 +205,35 @@ code {
 }
 
 .search-bar {
-	/* display: flex;
-	align-items: baseline; */
 	margin: auto;
-	width: 100%;
+	max-width: 800px;
 	position: relative;
 	z-index: 1;
 	margin-top: 20px;
 }
 
 .search-bar input {
-  /* padding: 1.2em; */
   font-size: 1.4em;
-  /* max-width: 32em; */
-  /* flex-grow: 0; */
-  /* display: inline-flex; */
-  background-color: #f2f2f2;
+  background-image: url("../src/img/search_icon.png") top right no-repeat;
   font-weight: 300;
   padding: 20px 40px;
   width: 100%;
-  -webkit-box-shadow: 3px 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 3px 3px 20px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 3px 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.1);
   outline: none;
-  border-radius: 20px;
+  border-radius: 1em;
   border: none; 
+}
+
+.fa-search {
+	text-align: right;
+	align-content: right;
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	font-size: 1.6em;
+	color: #797d81;
 }
 
 .search-bar .btn {
@@ -170,13 +246,13 @@ code {
 .search-grid {
 	width: 100%;
 	text-align: left;
-	margin-top: -20px;
+	margin-top: -40px;
 }
 
 .search-grid ul {
 	display: block;
 	width: 100%;
-	padding: 0px;
+	padding: 20px 0px 0px 0px;
 	position: absolute;
 	z-index: 0; 
 	margin-bottom: 80px;
@@ -184,7 +260,7 @@ code {
 
 .search-grid li {
 	position: relative;
-	background-color: #f2f2f2;
+	background-color: #fff;
 	width: inherit;
 	z-index: 2;
 	cursor: pointer;
@@ -212,8 +288,8 @@ code {
   
   .search-grid li:last-child {
 	border-radius: 0px 0px 20px 20px !important;
-	-webkit-box-shadow: 3px 3px 20px 0px rgba(0,0,0,0.25);
-	-moz-box-shadow: 3px 3px 20px 0px rgba(0,0,0,0.25);
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.25);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.25);
 	box-shadow: 2px 5px 5px 0px rgba(0,0,0,0.05);
   }
   
@@ -232,7 +308,7 @@ code {
 	text-align: center;
 }
 .new-team-form form {
-	padding: 2em 0 2em 0;
+	padding: 0em 0 2em 0;
 }
 
 .new-team-form .btn.btn-primary {
@@ -244,6 +320,7 @@ code {
 .save-team.card { 
 	text-align: center;
 	padding: 2em;
+	margin-bottom: 2em;
 }
 
 .save-team.card p {
@@ -254,18 +331,46 @@ code {
 	padding: 0 3em 0 3em;
 }
 
-.team-info .card-body p {
-
-}
-
 .pokemon-item .list-group-item  {
 	border-top-width: 1px;
+	padding: 0.5rem;
 }
 
 .team-info.card {
 	display: block;
-	background-color: #444a52;
-	margin-top: 2em;
+	margin: 0 auto;
+	margin-bottom: 4em;
+	max-width: 900px;
+}
+
+.team-info.card .card-header {
+	padding: 1.4em 2em 1em 2em;
+	display: flex;
+}
+
+.team-header {
+	flex: 70%;
+	padding-right: 2em;
+	text-align: left;
+}
+
+.team-header p {
+	padding-bottom: 0.2em;
+	margin-bottom: 0;
+	
+}
+
+
+.team-link {
+	display: flex;
+	flex: 40%;
+	align-content: flex-end;
+}
+
+.team-ign, .team-code {
+	color: #30c09e;
+	font-weight: bolder;
+	display: flex-inline;
 }
 
 .team-pokemon {
@@ -284,8 +389,8 @@ code {
 	background-size: cover;
 	background-position: center;
 	text-align: center;
-	height: 12rem;
-	padding: 2em;
+	height: 10rem;
+	padding: 1.8em;
 	border-color: none;
 	display: flex;
 }
@@ -297,7 +402,7 @@ code {
 }
 
 .card-title {
-	margin-bottom: 0.25rem;
+	margin-bottom: 0.2rem;
 }
 
 .pokemon-name, .pokemon-type {
@@ -305,25 +410,17 @@ code {
 }
 
 .pokemon-info .card-body {
-	padding: 2rem 0 2rem 0;
+	padding: 1rem 0 0.6rem 0;
 }
 
 .card-body p, .card-body h5, .card-body h4, .card-body div {
-	padding: 0 1.25rem 0 1.25rem;
+	padding: 0 1rem 0 1rem;
 }
 
 .card-body div.input-group-append {
 	padding: 0;
 }
 
-.team-link {
-	max-width: 30em;
-}
-
-.team-ign, .team-code {
-	color: #30c09e;
-	font-weight: bolder;
-}
 
 .pokemon-info.card span, ul, li {
 	text-align: left;
@@ -344,6 +441,113 @@ code {
 }
 
 
+/* Footer */ 
+
+.footer {
+	width: 100%; 
+	background-color: #fff;
+	border-top: 5px solid #ee738a;
+	min-height: 200px;
+	padding: 40px;
+	font-size: 20px;
+	text-align: center;
+	align-items: center;
+  }
+  
+  .footer .row {
+	max-width: 900px;
+	margin: 0 auto;
+	padding-top: 40px; 
+	text-align: center;
+  }
+  
+  .footer .col {
+	padding: 40px; 
+  }
+  
+  .footer .col div {
+	text-align: left;
+  }
+  
+  .footer h3 {
+	text-align: left;
+	font-size: 22px;
+  }
+  
+  .footer .links li {
+	text-align: left;
+	list-style: none;
+	text-decoration: none;
+	padding-bottom: 10px;
+	line-height: 100%;
+  }
+  .footer .links li a :visited {
+	color: #317771;
+	text-decoration: none;
+  }
+  
+  .footer .links ul {
+	margin: 0;
+	padding: 0;
+  }
+  
+  .footer .links a {
+	/* text-decoration: underline; */
+	color: #d5cbd9;
+	font-size: 16px;
+  }
+  
+  .footer  a :visited {
+	color: #d5cbd9;
+  }
+  
+  .footer a:hover {
+	color:  #09d3ac;
+	text-decoration: underline;
+  }
+  
+  .footer .donation {
+	margin: 0 auto;
+	text-align: center;
+  }
+  
+  .kofi {
+	font-size: 1em;
+	margin: 0 auto; 
+  }
+  
+  .kofi img {
+	margin: 0;
+	padding: 0px 10px 0px 0px;
+	text-align: center;
+  }
+  
+  .kofi a {
+	margin: 0;
+	padding: 0;
+	color: #ee738a;
+	font-weight: bold;
+	text-decoration: underline;
+  }
+  
+  .donate-crypto { 
+	padding: 20px;
+	font-size: 0.8em;
+	color: #444a52;
+  }
+  
+  
+  .donate-crypto p {
+	padding: 2px 0px 0px 0px;
+	margin: 0;
+	display: block;
+  }
+  
+  .donate-crypto {
+	text-decoration: none;
+	font-size: 0.8em;
+  }
+  
 
 
 /* type badge colors */ 

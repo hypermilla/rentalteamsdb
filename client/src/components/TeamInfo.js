@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import PokemonInfo from './PokemonInfo';
+import TeamLink from './TeamLink';
 import PropTypes from 'prop-types';
 
 const TeamInfo = (props) => {
@@ -41,19 +42,14 @@ const TeamInfo = (props) => {
 	return (
 		<div className="team-info card">
 			<div className="card-header">
-				Your Team Info: 
+				<div className="team-header">
+					<p>IGN: <span className="team-ign">{team.ign}</span></p>
+					<p>Rental Code: <span className="team-code">{team.rentalCode}</span></p>
+				</div>
+				<TeamLink linkRef={linkTextRef} teamURL={teamURL} onClick={(e) => copyLinkToClipboard(e)} />
 			</div>
 			<div className="card-body">
-				<h4>IGN: <span className="team-ign">{team.ign}</span></h4>
-				<h4>Rental Code: <span className="team-code">{team.rentalCode}</span></h4>
-				<div class="team-link input-group mb-3">
-					<input type="text" class="form-control" id="teamLink" ref={linkTextRef} value={teamURL} />
-					<div class="input-group-append">
-						<button class="btn btn-primary copy-link-btn" id="basic-addon2" onClick={(e) => copyLinkToClipboard(e)}>
-							Copy Link
-						</button>
-					</div>
-				</div>
+				
 			</div>
 			<div className="team-pokemon card-deck">
 				{pokemon}

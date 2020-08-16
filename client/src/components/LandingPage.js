@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import SearchBar from './searchBar';
 import TeamInfo from './TeamInfo';
+import Header from './Header';
 import { Link } from 'react-router-dom';
 
 import _ from 'lodash';
@@ -15,9 +16,16 @@ const LandingPage = () => {
 
 	useEffect(() => {
 		const fetchTeams = async () => {
-			let result = await axios.get('/api/fetch_teams'); 
-			setData(result.data.teams);
-			console.log('Teams Data Fetched!', 'Teams fetched:', result.data.teams.length);
+			try {
+				let result = await axios.get('/api/fetch_teams'); 
+				setData(result.data.teams);
+				console.log('Teams Data Fetched!', 'Teams fetched:', result.data.teams.length);
+			}
+			catch (error) {
+				console.log(error);
+				fetchTeams();
+			}
+
 		};
 
 		fetchTeams();
@@ -40,9 +48,10 @@ const LandingPage = () => {
 	}
 
     return (
-        <div className="landing">
-			<h1>Pokémon Sword & Shield Rental Teams Repository</h1>
-			<p>Search for competitive Pokémon teams to try out, or add your own.</p>
+        <div className="landing container">
+			<Header />
+			<h3>Pokémon Rental Teams Repository</h3>
+			<p>Search for competitive teams to try out, or <Link to="/newteam" className="text-link">add your own</Link>.</p>
 
 			<SearchBar 
 				onTermChange={searchTerm}

@@ -1,6 +1,7 @@
 import React, {  useEffect, useState} from 'react'; 
 import TeamInfo from './TeamInfo'; 
 import TeamInfoStatusChecker from './TeamInfoStatusChecker'; 
+import Navbar from './Navbar';
 
 
 const TeamPage = (props) => {
@@ -15,6 +16,7 @@ const TeamPage = (props) => {
 
 	return (
 		<div className="team-page">
+			<Navbar />
 			{ hasFetchedTeam ?
 				<TeamInfo teamData={team} isNewTeam={false} />
 			:

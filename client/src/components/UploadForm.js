@@ -93,7 +93,7 @@ const UploadForm = (props) => {
 
 	return (
 		<div className='new-team-form'>
-			<h1>Add your own team</h1>
+			<h3>Add your own team</h3>
 			<p>Share your Rental Team image from your Nintendo Switch and upload the PNG file here. 
 				<br />Rotom will read the image file, recognize the pokémon data and add your team to the database!
 			</p>
