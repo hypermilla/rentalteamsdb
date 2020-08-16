@@ -17,17 +17,17 @@ const LandingPage = () => {
 	useEffect(() => {
 		const fetchTeams = async () => {
 			try {
-				let result = await axios.get('/api/fetch_teams'); 
+				let result = await axios.get(`/api/fetch_teams`); 
 				setData(result.data.teams);
-				console.log('Teams Data Fetched!', 'Teams fetched:', result.data.teams.length);
+				console.log('Fetched', result.data.teams.length, 'teams');
+				console.log(result); 
 			}
 			catch (error) {
-				console.log(error);
-				fetchTeams();
+				console.log('Could not fetch data:', error);
+				setTimeout(fetchTeams, 5000);
 			}
 
 		};
-
 		fetchTeams();
 	}, [setData]);
 

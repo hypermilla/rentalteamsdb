@@ -5,12 +5,11 @@ const JobStatusChecker = (props) => {
 	const [jobStatus, setJobStatus] = useState('Analysing image...');
 	const [statusUpdateCount, setStatusUpdateCount] = useState(0);
 
-	const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 	useEffect(() => {
 		console.log('Rendering Job Status');
 		const getNewTeamData = async (jobId) => {
-			let status = await axios.get(`${BASE_URL}/api/team_job_status/${jobId}`); 
+			let status = await axios.get(`/api/team_job_status/${jobId}`); 
 			return status;
 		};
 

@@ -72,8 +72,7 @@ const UploadForm = (props) => {
 
 
 		try {
-			const BASE_URL = process.env.REACT_APP_BASE_URL;
-			const res = await axios.post(`${BASE_URL}/api/upload`, formData, {
+			const res = await axios.post(`/api/upload`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'					
 				},

@@ -3,13 +3,12 @@ import axios from 'axios';
 
 const TeamInfoStatusChecker = (props) => {
 	const [teamStatus, setTeamStatus] = useState('Getting team info...');
-	const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 	useEffect(() => {
 		const fetchTeamDataFromId = async () => {
 			try {
 				console.log('FETCHING DATA FROM ID', props.teamCode);
-				let teamDataFromId = await axios.get(`${BASE_URL}/api/fetch_team_by_code/${props.teamCode}`); 
+				let teamDataFromId = await axios.get(`/api/fetch_team_by_code/${props.teamCode}`); 
 
 				if (teamDataFromId.data.msg != undefined) {
 					setTeamStatus(teamDataFromId.data.msg); 
@@ -21,7 +20,7 @@ const TeamInfoStatusChecker = (props) => {
 				}
 			}
 			catch(error) {
-				fetchTeamDataFromId();
+				setTimeout(fetchTeamDataFromId, 5000);
 			}
 		};
 

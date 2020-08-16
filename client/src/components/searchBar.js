@@ -51,7 +51,7 @@ const SearchBar = (props) => {
 				onFocus={event => onEnterFocus()}
 				onBlur={event => onLeaveFocus()}
 			/>
-			<i class="fas fa-search"></i>
+			<i className="fas fa-search"></i>
 
 			{ isResultsActive ?
 				<SearchGrid

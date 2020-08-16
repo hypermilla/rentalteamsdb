@@ -7,6 +7,7 @@ class DataController {
 	static async fetchTeams(req, res) {
 		try {
 			const teams = await Team.find({}); 
+			console.log('Received teams request and sent back', teams.length, 'teams.');
 			return res.send({ teams: teams });
 		} catch (error) {
 			return res.send({ error });  
@@ -18,8 +19,9 @@ class DataController {
 			console.log('Fetch teams by IGN request:', req.params.ign); 
 			const team = await Team.findOne({ ign: req.params.ign });
 			if (team)
-				console.log("Team found:", team);
+				console.log("Team found for IGN", req.params.ign);
 			else
+				console.log('No teams found for IGN', req.params.ign);
 				return res.send({ teams: "No teams found" }); 
 
 		} catch(error) {
@@ -32,10 +34,13 @@ class DataController {
 			const team = await Team.findOne({ teamId: req.params.teamId });
 
 			if (team) {
-				console.log("Team found:", team);
+				console.log("Team found for Team ID", req.params.teamId);
 				return res.send({ team: team });
 			}
-			else return res.send({ msg: "No teams found." })
+			else {
+				console.log("No teams found for Team ID", req.params.teamId);
+				return res.send({ msg: "No teams found." });
+			}
 			
 		} catch (error) {
 			return res.status(500).send('Error fetching data');
@@ -50,13 +55,17 @@ class DataController {
 				teamCode = String(teamCode).padStart(14, '0');
 				console.log(teamCode); 
 			}
-			
+
+			console.log("Received request to fetch team by code", req.params.teamCode);
 			const team = await Team.findOne({ rentalCode: teamCode });
 			if (team) {
-				console.log("Team found:", team);
+				console.log("Team found for code", teamCode);
 				return res.send({ team: team });
 			}
-			else return res.send({ msg: "No teams found." })
+			else {
+				console.log('No teams found for code', teamCode);
+				return res.send({ msg: "No teams found." });
+			} 
 			
 		} catch (error) {
 			return res.status(500).send('Error fetching data');

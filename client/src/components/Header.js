@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <div className="header">
 			<Link to="/newteam" type="button" className="new-team-btn btn btn-primary">
-					<i class="fas fa-plus-circle"></i>
+					<i className="fas fa-plus-circle"></i>
 					Add new team
 			</Link>
 			<div className="logo">
