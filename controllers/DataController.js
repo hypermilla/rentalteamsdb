@@ -50,13 +50,14 @@ class DataController {
 	static async fetchTeamByCode(req, res) {
 		try {
 			// Adjust teamCode to actual length with padding
+			// Apparently rental codes can be less than 14 characters, but they always have 7 zeroes in front 
 			let teamCode = req.params.teamCode; 
-			if (teamCode.length < 14) {
-				teamCode = String(teamCode).padStart(14, '0');
-				console.log(teamCode); 
+			while (!teamCode.startsWith("0000000")) {
+				//teamCode = String(teamCode).padStart(14, '0');
+				teamCode = "0" + teamCode;
 			}
-
 			console.log("Received request to fetch team by code", req.params.teamCode);
+			console.log('Treated code:', teamCode); 
 			const team = await Team.findOne({ rentalCode: teamCode });
 			if (team) {
 				console.log("Team found for code", teamCode);
