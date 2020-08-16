@@ -17,7 +17,7 @@ const LandingPage = () => {
 	useEffect(() => {
 		const fetchTeams = async () => {
 			try {
-				let result = await axios.get(`/api/fetch_teams`); 
+				let result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/fetch_teams`); 
 				setData(result.data.teams);
 				console.log('Fetched', result.data.teams.length, 'teams');
 				console.log(result); 
