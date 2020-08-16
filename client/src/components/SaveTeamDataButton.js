@@ -6,9 +6,11 @@ import Message from './Message';
 const SaveTeamDataButton = (props) => {
 	const [message, setMessage] = useState('');
 
+	const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 	const saveTeamChanges = async () => {
 		try {
-			const res = await axios.post('/api/update_team', { teamData: props.teamData });
+			const res = await axios.post(`${BASE_URL}/api/update_team`, { teamData: props.teamData });
 			setMessage(res.data.msg);
 		} 
 		catch (err) {

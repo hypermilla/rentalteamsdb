@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-	  "npm": "6.14.x",
-	  "node": "13.11.x"
+    "npm": "6.14.x",
+    "node": "13.11.x"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -15,14 +15,14 @@
     "http-proxy": "^1.18.1",
     "http-proxy-middleware": "^1.0.3",
     "jquery": "^3.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-bootstrap-icons": "^1.0.2-alpha3",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "typescript": "^4.0.0-dev.20200516",
