@@ -78,6 +78,7 @@ a.text-link :hover {
 /* Header */ 
 
 .header {
+	padding-bottom: 1em;
 }
 
 .header h1 { 
