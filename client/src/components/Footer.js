@@ -15,7 +15,7 @@ const Footer = (props) => {
 					</a>
 				</div>
 				<div className="donate-crypto">
-					<p><b>ETH:</b> <a href="#" className="text-link">milla.eth</a></p>
+					<p><b>ETH:</b> <a href="#" className="text-link">0xf9e2c1886F9c3650Cd998CfFf1D671c117aBc316</a></p>
 					<p><b>BTC:</b> <a href="#" className="text-link">1FiXbrMAQ6RAyCEV43QJzs5HfuZhTyZBbk</a></p>
 				</div>
 			</div>
